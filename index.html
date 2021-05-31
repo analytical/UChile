@@ -1,0 +1,3200 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Herramientas de Diseño Estadístico e   Interpretación de las Mediciones</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Carlos Gómez cvgomez@gmail.com" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Herramientas de Diseño Estadístico e <br> Interpretación de las Mediciones
+## Una aproximación con R
+### <br><a href='https://www.analytical.cl'>Carlos Gómez<br></a><a href='mailto:cvgomez@gmail.com'>cvgomez@gmail.com</a>
+### <br>Facultad de Ciencias Químicas y Farmacéuticas
+
+---
+
+class: bg-main1
+
+
+
+---
+## El instructor de este curso
+
+.pull-left[
+
+&lt;img src="img/foto.jpg" id="Avatar" &gt;
+]
+
+.pull-right[
+
+Carlos J. Gómez
+&lt;br&gt;
+
+&lt;i class="fab fa-r-project"&gt;&lt;/i&gt; useR desde 2004&lt;br&gt;&lt;br&gt;
+Gestor de Calidad de Billetes &amp; Monedas 
+&lt;br&gt;
+Banco Central de Chile
+&lt;br&gt;
+
+
+.typed[]
+]
+---
+
+## .right[🛠 Objetivo]
+
+&lt;br&gt;
+
+.large[
+El alumno será capaz de aplicar métodos estadísticos *modernos* en distintos
+problemas de la química analítica implementando las ténicas en lenguaje R. 
+Desarrollará el pensamiento estadístico crítico para evaluar información
+cuantittiva en ciencias de las mediciones.
+]
+
+
+
+---
+
+## ¿Qué veremos en la clase "presencial" online?
+
+1. Introducción al lenguaje de programación &lt;i class="fab fa-r-project"&gt;&lt;/i&gt;
+2. Métodos de simulación
+3. Investigación reproducible usando `rmarkdown`
+4. Análisis exploratorio de datos 
+5. Análisis de varianza (Estudios r&amp;R)
+6. Calibración lineal
+
+
+---
+
+class: inverse middle
+
+# ¿Por qué `R`?
+
+---
+
+## ¿Por qué `R`?
+
+- lenguaje de programación *para estadística creado por estadísticos*
+- potenciado con más de 15,000 paquetes y librerías
+- `metRology`, `chemCal`, etc.
+- es el idioma *de facto* de la estadística y data science
+- ¡es gratis! (*open source*)
+
+
+---
+
+class: center middle inverse
+
+# Introducción a `R`
+
+---
+class: center middle inverse
+
+# ¿Instaló R y Rstudio?
+
+---
+# ¿Por qué RStudio?
+&lt;br&gt;
+.pull-left[
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/1ac3f0e3753f18c7e2a8893957d1841fba1e3d08/48a33/wp-content/uploads/2018/10/rstudio-logo-flat.png" width="600" height="200"&gt;
+]
+
+.pull-right[
+1. IDE (Entorno de desarrollo integrado)
+2. Permite un desarrollo bajo el concepto de "**Investigación Reproducible**"
+3. ¡Completamente gratis!
+]
+
+
+
+---
+class: center middle inverse
+# Iniciemos
+&lt;br&gt;
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/1ac3f0e3753f18c7e2a8893957d1841fba1e3d08/48a33/wp-content/uploads/2018/10/rstudio-logo-flat.png" width="600" height="200"&gt;
+
+---
+class: center middle inverse
+
+# Simulación de datos aleatorios
+
+---
+## R posee varias herramientas para simulación aleatoria. Usaremos el comando `rnorm` para simular datos normales:
+
+
+
+```r
+# Guardaremos en x 100 datos aleatorios normales con media 120 y desviación
+# estándar 10
+
+x &lt;- rnorm(100, 120, 10)
+```
+
+---
+## Simulación de datos normales
+
+
+```r
+hist(x)
+```
+
+![](index_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+
+---
+## Simulación de datos normales
+
+
+```r
+mean(x)
+```
+
+```
+[1] 119.3632
+```
+
+```r
+sd(x)
+```
+
+```
+[1] 8.437876
+```
+
+
+
+---
+class: center middle inverse
+
+# Análisis Exploratorio de Datos
+## Crearemos un proyecto en RStudio
+## `Curso Estadsitica 2021`
+
+---
+## ¿Cuál es el objetivo de la inferencia estadística?
+&lt;br&gt;
+&lt;br&gt;
+.center[
+&lt;img src="img/muestreo.svg" width="90%" /&gt;
+]
+&lt;br&gt;.footer[
+Cortesía de https://github.com/walmes/Tikz
+]
+
+
+---
+class: center middle inverse
+
+# Importar datos desde Excel
+
+---
+## Instalamos la librería `readxl`:
+
+
+```r
+install.packages('readxl')
+```
+
+---
+## Importaremos la hoja `EDA` del archivo `datos_curso.xlsx`:
+
+
+```r
+library(readxl) # Cargamos la librería
+eda &lt;- read_excel('datos_curso.xlsx', sheet = 'EDA')
+head(eda) # es un data frame (similar a una matriz de datos en Excel)
+```
+
+```
+# A tibble: 6 x 3
+  Muestra Analista Concentracion
+  &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;
+1 QC-1    A                 27.8
+2 QC-2    A                 26.7
+3 QC-3    A                 27  
+4 QC-4    A                 25.6
+5 QC-5    A                 27.2
+6 QC-6    A                 25.9
+```
+
+
+---
+class: center middle inverse
+
+# Gráficos con el package `ggplot2`
+
+---
+## Instalamos la librería `ggplot2`:
+
+
+```r
+install.packages(ggplot2) # se instala una única vez en el documento
+```
+
+---
+## Cargamos la librería `ggplot2`:
+
+
+```r
+library(ggplot2) #se carga una sola vez en el documento
+```
+
+---
+## Boxplot
+
+.pull-left[
+
+```r
+ggplot(eda, aes(x = Analista, y = Concentracion)) +
+  geom_boxplot()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+]
+
+---
+## Boxplot
+
+.pull-left[
+
+```r
+ggplot(eda, aes(x = Analista, y = Concentracion, fill = Analista)) +
+  geom_boxplot() +
+  ggtitle('Concentración de %Cu por analista') +
+  xlab('Analista') +
+  ylab('Concentración % Cu') +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+]
+
+---
+## Histograma
+
+.pull-left[
+
+```r
+ggplot(eda, aes(x = Concentracion)) +
+  geom_histogram(fill = 'blue') +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+]
+
+---
+## Density plot
+
+.pull-left[
+
+```r
+ggplot(eda, aes(x = Concentracion)) +
+  geom_density(fill = 'red') +
+  xlim(23, 31) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+]
+
+---
+class: center middle inverse
+# ¿Cómo podría diferencias a los analistas?
+
+---
+## Density plot ¿Cómo podría diferenciar a los analistas?
+
+.pull-left[
+
+```r
+ggplot(eda, aes(x = Concentracion, fill = Analista)) +
+  geom_density() +
+  xlim(23, 31) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+]
+
+---
+## Density plot ¿Cómo podría diferenciar a los analistas?
+
+.pull-left[
+
+```r
+ggplot(eda, aes(x = Concentracion, fill = Analista)) +
+  geom_density(alpha = 0.3) +
+  xlim(23, 31) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+]
+---
+## Density plot ¿Cómo podría diferenciar a los analistas?
+
+.pull-left[
+
+```r
+ggplot(eda, aes(x = Concentracion, fill = Analista, col = Analista)) +
+  geom_density(alpha = 0.3) +
+  xlim(23, 31) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+]
+
+---
+## QQ Plot de normalidad
+
+.pull-left[
+
+```r
+ggplot(eda, aes(sample = Concentracion)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal()
+```
+]
+
+.pull-rigth[
+![](index_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+]
+
+---
+## Dotplot o strpchart: Cuando los datos son discretos (con pocos decimales) o instrumentos con poca resolución (balanza granataria vs analítica):
+
+
+```r
+# Importar la hoja Peso
+peso &lt;- read_excel('datos_curso.xlsx', sheet = 'Peso')
+head(peso) 
+```
+
+```
+# A tibble: 6 x 2
+  Peso_baja_resolucion Peso_alta_resolucion
+                 &lt;dbl&gt;                &lt;dbl&gt;
+1                  251                 251.
+2                  251                 251.
+3                  253                 253.
+4                  256                 256.
+5                  251                 251.
+6                  248                 248.
+```
+
+
+---
+## Analicemos la variable `Peso_original` obtenida con una balanza que posee una resolución de 0,001 g:
+
+.pull-left[
+
+```r
+ggplot(peso, aes(y = Peso_baja_resolucion)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+]
+
+---
+### Analicemos la variable `Peso_original` obtenida con una balanza que posee una resolución de 0,001 g:
+
+.pull-left[
+
+```r
+ggplot(peso, aes(sample = Peso_baja_resolucion)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+]
+
+---
+### Analicemos la variable `Peso_original` obtenida con una balanza que posee una resolución de 0,0001 g:
+
+.pull-left[
+
+```r
+ggplot(peso, aes(sample = Peso_alta_resolucion)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+]
+
+---
+## Con datos con baja resolución es mejor utilizar `dotPlot` de la librería `mosaic`:
+
+.pull-left[
+
+```r
+library(mosaic) # Asumimos que ya se instaló con install.packages('mosaic')
+dotPlot(~ Peso_baja_resolucion, data = peso)
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+]
+
+
+---
+## Estadística descriptiva con el package `mosaic`:
+
+```r
+favstats(Concentracion ~ Analista, data = eda)  
+```
+
+```
+  Analista   min      Q1 median      Q3   max     mean        sd  n missing
+1        A 25.01 26.2575 26.790 27.2650 28.79 26.82458 0.9088645 24       0
+2        B 25.59 26.2400 27.060 27.5600 28.79 26.98320 0.9762160 25       0
+3        C 25.58 26.5100 27.190 27.8000 30.00 27.23320 1.0165330 25       0
+4        D 24.53 26.8275 27.325 27.9275 29.10 27.27846 0.9677632 26       0
+```
+
+```r
+# Para calcular MAD usar mad()
+mad(eda$Concentracion) # Con el signo $ seleccionamos uan de las variables del df
+```
+
+```
+[1] 1.045233
+```
+
+
+
+---
+class: center middle inverse
+
+# Intervalo de confianza para la media de datos normales
+## ¿Cuál es la interpretación correcta?
+
+---
+## Intervalo de confianza para datos normales:
+
+![Plot title. ](index_insertimage_7.png)
+
+
+---
+# Calcular el IC para una muestra `Normal`:
+
+
+.pull-left[
+
+```r
+# Simularemos 20 datos normales con media 100 
+# y desviación estándar 10
+x.normal &lt;- rnorm(20, 100, 10)
+shapiro.test(x.normal)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  x.normal
+W = 0.96193, p-value = 0.5831
+```
+
+
+```r
+datos.normales &lt;- data.frame(x.normal)
+ggplot(datos.normales, aes(sample = x.normal)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal() +
+  ggtitle('QQ plot de normalidad')
+```
+
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+]
+
+---
+## En la práctica no conocemos la desviación estándar, por lo tanto, debemos utilizar:
+
+`$$\overline{x} \pm t_{n - 1, \alpha/2}\cdot\frac{s}{\sqrt{n}}$$`
+En `R` lo podríamos calcular "a mano":
+
+
+```r
+media &lt;- mean(x.normal)
+s &lt;- sd(x.normal)
+n &lt;- length(x.normal) # Número de datos
+alpha &lt;- 0.05 
+t &lt;- qt(1 - alpha/2, n - 1)
+
+ci.superior &lt;- media + t*s/sqrt(n)
+ci.inferior &lt;- media - t*s/sqrt(n)
+
+ic &lt;- c(ci.inferior, ci.superior)
+ic
+```
+
+```
+[1]  92.74678 100.52360
+```
+
+---
+## En la práctica no conocemos la desviación estándar, por lo tanto, debemos utilizar:
+
+`$$\overline{x} \pm t_{n - 1, \alpha/2}\cdot\frac{s}{\sqrt{n}}$$`
+O usar el comando del test T `t.test`:
+
+
+```r
+t.test(x.normal)
+```
+
+```
+
+	One Sample t-test
+
+data:  x.normal
+t = 52.016, df = 19, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+  92.74678 100.52360
+sample estimates:
+mean of x 
+ 96.63519 
+```
+
+---
+## En la práctica no conocemos la desviación estándar, por lo tanto, debemos utilizar:
+
+`$$\overline{x} \pm t_{n - 1, \alpha/2}\cdot\frac{s}{\sqrt{n}}$$`
+O usar el comando `ci` del package `gmodels`:
+
+
+```r
+library(gmodels) # Asumimos que está instalado con install.packages('gmodels')
+ci(x.normal)
+```
+
+```
+  Estimate   CI lower   CI upper Std. Error 
+ 96.635190  92.746780 100.523600   1.857795 
+```
+
+---
+class: center middle inverse
+
+# ¿Cuál es el problema de las pruebas de hipótesis y los *p-values*?
+
+---
+## Críticas a las pruebas de hipótesis
+
+"What's wrong with [null hypothesis significance testing]? Well, among many other things, it does not tell us what we want to know, and we so much want to know what we want to know that, out of desperation, we nevertheless believe that it does!"
+
+– Cohen (1994)
+“… surely the most bone-headedly misguided procedure ever institutionalized in the rote training of science students"
+
+– Rozeboom (1997)
+“… despite the awesome pre-eminence this method has attained in our journals and textbooks of applied statistics, it is based upon a fundamental misunderstanding of the nature of rational inference, and is seldom if ever appropriate to the aims of scientific research”
+
+– Rozeboom (1960)
+“… an instance of a kind of essential mindlessness in the conduct of research" – Bakan (1966)
+
+– Bakan (1966)
+“Statistical significance testing retards the growth of scientific knowledge; it never makes a positive contribution”
+
+– Schmidt and Hunter (1997)
+“The textbooks are wrong. The teaching is wrong. The seminar you just attended is wrong. The most prestigious journal in your scientific field is wrong."
+
+---
+## Declaración oficial de la *American Statistical Association*:
+
+![Plot title. ](index_insertimage_10.png)
+
+---
+## Críticas actuales en revistas internacionesl con alto ISI:
+
+![Plot title. ](index_insertimage_11.png)
+
+---
+## Críticas actuales en revistas internacionesl con alto ISI:
+
+![Plot title. ](index_insertimage_12.png)
+
+---
+## Críticas actuales en revistas internacionesl con alto ISI:
+
+![Plot title. ](index_insertimage_13.png)
+
+
+---
+class: center middle inverse
+# Cómo comparar 1 media (1 grupo) con un valor pre-especificado?
+
+---
+## Comparar 1 media con un valor pre-especificado
+
+![Plot title. ](index_insertimage_8.png)
+
+---
+## Comparar la concentración de %Cu en una aleación cuya especificación es de `\(\mu_{0} = 92\%\)`
+
+
+```r
+# generaremos n = 10 datos normales cuya media sea 92% y desviación std 10
+Cu &lt;- rnorm(10, 92, 10)
+Cu
+```
+
+```
+ [1]  97.13158  87.36962 104.11168  80.83582  89.90122  96.11085 105.72642
+ [8] 101.96977  89.51274  84.47917
+```
+
+- `\(H_{0} \,\, \mu = 92\%\)`
+- `\(H_{0} \,\, \mu \neq 92\%\)`
+
+---
+### Comparar la concentración de %Cu en una aleación cuya especificación es de `\(\mu = 92\%\)`
+
+.pull-left[
+![](index_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
+]
+
+
+---
+## Test de Normalidad de Shapiro
+
+
+```r
+shapiro.test(Cu)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  Cu
+W = 0.94871, p-value = 0.6533
+```
+
+---
+## test T para comparar una media con una especificación
+
+
+```r
+t.test(Cu, mu = 92)
+```
+
+```
+
+	One Sample t-test
+
+data:  Cu
+t = 0.63252, df = 9, p-value = 0.5428
+alternative hypothesis: true mean is not equal to 92
+95 percent confidence interval:
+ 87.58170 99.84808
+sample estimates:
+mean of x 
+ 93.71489 
+```
+
+
+---
+## Errores que se pueden cometer en una prueba de significancia:
+
+- Error tipo I: `\(H_{0}\)` es verdadera pero "justo" tomamos una muestra tan extrema que rechazamos esta hipótesis. Esto ocurrirá un `\(\alpha\)` % de las veces 
+
+- Error tipo II: `\(H_{0}\)` es falsa pero debido a la aleatoriedad del muestreo y precisión analítica no rechazamos esta hipótesis (¿El error "escondió" la diferencia?). Esto ocurrirá un `\(\beta\)` % de las veces.
+
+
+PD: La potencia estadística se define como *"la probabilidad de rechzar `\(H_{0}\)`
+cuando ésta es falsa. Esto ocurrirá un `\(\1 \beta\)` % de las veces.
+
+---
+class: center middle inverse
+
+# ¿Cuáles "veces"?... 
+# si llevamos a cabo el experimento ¡una única vez!
+
+---
+## Problemas con las pruebas de hipótesis y p-values
+
+.pull-left[
+1. No le dicen al científico lo que quiere saber
+2. Significancia estadística no implica, necesariamente, significancia práctica
+3. ¿Qué sucede en los casos límites? ¿p-value = 0,049999? ó ¿p-value = 0,050001?
+]
+
+.pull-right[
+![Plot title. ](index_insertimage_14.png)
+]
+
+---
+# Considerar siempre el error tipo I ó `\(\alpha\)`  (Falso descubrimiento):
+&lt;img src="index_insertimage_15.png" width="50%" /&gt;
+
+
+---
+## La interpretación de una prueba de hipótesis dependerá de muchos factores:
+
+.pull-left[
+1. Tamaño de la muestra 
+2. Tamaño del efecto "encontrado"
+3. Precisión de las mediciones
+4. Variabilidad entre-sujetos/muestras
+5. Área de estudio
+6. etc.
+]
+
+.pull-right[
+&lt;img src="index_insertimage_16.png" width="60%" /&gt;
+]
+
+---
+## El paradigma actual de las pruebas de hipótesis p-value &lt; 0,05:
+
+.pull.left[
+- Las hipótesis nulas **NUNCA** de aceptan
+- Sólo es posible rechazarlas o no
+]
+
+.pull-right[
+&lt;img src="index_insertimage_17.png" width="90%" /&gt;
+]
+---
+### Si el p-value &gt; 0,05 `\(\implies\)`  **No existe evidencia en contra de `\(H_{0}\)` lo que no quiere decir que sea cierta**
+
+&lt;img src="index_insertimage_18.png" width="50%" /&gt;
+
+---
+class: center middle inverse
+
+# Comparación de 2 medias : independientes o pareadas
+
+---
+### Comparación de 2 medias independientes `\(H_{0}: \mu_{1} = \mu_{2}\)` vs `\(H_{1}: \mu_{1} \neq \mu_{2}\)`
+
+![Plot title. ](index_insertimage_19.png)
+
+---
+class: center middle inverse
+
+# Pensemos como Químicos 
+# `\(H_{0}: \mu_{1} = \mu_{2}\)` vs `\(H_{1}: \mu_{1} \neq \mu_{2}\)`
+
+---
+## Simularemos datos normales con `\(H_{0}\)` "verdadera" y con la misma precisión:
+
+
+```r
+set.seed(123) # Es para que todos generemos los mismos números aleatorios
+icpms &lt;- rnorm(10, 100, 10)
+faas &lt;- rnorm(10, 100, 10)
+```
+
+
+---
+## En primer lugar, confirmamos la normalidad de los datos:
+
+
+```r
+shapiro.test(icpms)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  icpms
+W = 0.92372, p-value = 0.389
+```
+
+```r
+shapiro.test(faas)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  faas
+W = 0.95281, p-value = 0.7018
+```
+
+---
+## En rigor, en segundo lugar, se debiera comparar sus varianzas con el test F:
+
+
+```r
+var.test(icpms, faas)
+```
+
+```
+
+	F test to compare two variances
+
+data:  icpms and faas
+F = 0.8442, num df = 9, denom df = 9, p-value = 0.8049
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.2096867 3.3987337
+sample estimates:
+ratio of variances 
+         0.8441974 
+```
+
+Lo cual era esperado pues fueron simulados _homocedásticos_ (misma varianza/precisión)
+
+---
+## Test T para varianzas iguales
+
+
+```r
+t.test(icpms, faas)
+```
+
+```
+
+	Welch Two Sample t-test
+
+data:  icpms and faas
+t = -0.30058, df = 17.872, p-value = 0.7672
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -10.710488   8.030562
+sample estimates:
+mean of x mean of y 
+ 100.7463  102.0862 
+```
+
+
+---
+## Simulemos el caso heterocedástico
+
+
+```r
+set.seed(226)
+icpms &lt;- rnorm(10, 100, 10) # Varianza = 10
+faas &lt;- rnorm(10, 100, 20) # Varianza = 20
+```
+
+---
+## Normalidad con test de Shapiro-Wilk:
+
+
+```r
+shapiro.test(icpms)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  icpms
+W = 0.94203, p-value = 0.5758
+```
+
+```r
+shapiro.test(faas)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  faas
+W = 0.85648, p-value = 0.06934
+```
+
+---
+## Evaluamos la igualdad de varianzas con el test F
+
+
+```r
+var.test(icpms, faas)
+```
+
+```
+
+	F test to compare two variances
+
+data:  icpms and faas
+F = 0.12874, num df = 9, denom df = 9, p-value = 0.00538
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.03197607 0.51828820
+sample estimates:
+ratio of variances 
+         0.1287355 
+```
+
+... pues así fueron simuladas, es decir, con distinta precisión (varianza)
+
+---
+## Llevamos a cabo el test T para varianzas distintas
+
+
+```r
+t.test(icpms, faas, var.equal = F)
+```
+
+```
+
+	Welch Two Sample t-test
+
+data:  icpms and faas
+t = -1.0955, df = 11.279, p-value = 0.2961
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -23.448680   7.832227
+sample estimates:
+mean of x mean of y 
+ 95.52493 103.33315 
+```
+---
+class: center middle inverse
+
+# ¿Y si hubiesen sido muestras pareadas?
+
+---
+## Test T para muestras pareadas:
+
+![Plot title. ](index_insertimage_20.png)
+
+---
+## Test T para muestras pareadas:
+
+
+
+```r
+t.test(icpms, faas, paired = T)
+```
+
+```
+
+	Paired t-test
+
+data:  icpms and faas
+t = -1.0408, df = 9, p-value = 0.3251
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -24.778816   9.162363
+sample estimates:
+mean of the differences 
+              -7.808226 
+```
+
+
+---
+class: center middle inverse
+
+# ¿Qué hacer con los datos anómalos (*outliers*)
+
+---
+
+.pull-left[
+&lt;img src="img/outliers.jpg" width="100%" /&gt;
+]
+.pull.right[
+- Si los eliminamos podríamos subestimar la verdadera precisión de un método analítico
+- Si los dejamos podríamos sobrestimar la variabilidad de los datos y "esconder" diferencias químicamente relevantes
+- etc.
+]
+
+
+---
+## ¿Qué es un dato anómalo?
+
+&gt; Un dato anómalo (*outlier*) es un valor o una observación que está distante de las otras observaciones, es decir, que difiere significativamente de los otros datos. Enderlein va más allá y considera a los outliers como valores que están tan distantes de los otros, que se podría pensar que fueron generados por otro mecanismo. 
+
+Antes de llevar a cabo un test de outliers es necesario verificar que el dato
+es, desde el punto de vista químico, válido (Registros de medición y calibración, magnitudes físicas que influencias la medición, etc.)
+
+---
+## Ejemplo: importamos datos de % Cu en mineral hoja `outliers_1`:
+
+
+
+```r
+Cu.out &lt;- read_excel('datos_curso.xlsx', sheet = 'outliers_1')
+Cu.out
+```
+
+```
+# A tibble: 20 x 1
+      Cu
+   &lt;dbl&gt;
+ 1  1.22
+ 2  1.21
+ 3  1.29
+ 4  1.13
+ 5  1.2 
+ 6  1.28
+ 7  1.23
+ 8  1.2 
+ 9  1.16
+10  0.97
+11  1.23
+12  1.19
+13  1.05
+14  1.31
+15  1.1 
+16  1.39
+17  0.86
+18  0.86
+19  0.87
+20  0.65
+```
+
+---
+## Boxplot de % Cu en mineral
+
+.pull-left[
+
+```r
+ggplot(Cu.out, aes(y = Cu)) +
+  geom_boxplot(fill = 'blue', col = 'blue', alpha = 0.5) +
+  theme_minimal() +
+  ylab('% Cu') +
+  scale_x_discrete() # Elimina el eje X
+```
+Todos los valores fuera del siguiente intervalo son considerados como outliers:
+`$$I = [q_{0.25} - 1.5 \cdot IQR; q_{0.75} + 1.5 \cdot IQR]$$`
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-62-1.png)&lt;!-- --&gt;
+]
+---
+## Test de Dixon con el package `outliers`:
+
+
+```r
+library(outliers)
+dixon.test(Cu.out$Cu)
+```
+
+```
+
+	Dixon test for outliers
+
+data:  Cu.out$Cu
+Q = 0.32812, p-value = 0.4475
+alternative hypothesis: lowest value 0.65 is an outlier
+```
+
+---
+## Test de Grubbs con el package `outliers`:
+
+
+```r
+library(outliers)
+grubbs.test(Cu.out$Cu)
+```
+
+```
+
+	Grubbs test for one outlier
+
+data:  Cu.out$Cu
+G = 2.49988, U = 0.65377, p-value = 0.06351
+alternative hypothesis: lowest value 0.65 is an outlier
+```
+
+```r
+favstats(Cu.out$Cu)
+```
+
+```
+  min   Q1 median   Q3  max mean       sd  n missing
+ 0.65 1.03  1.195 1.23 1.39 1.12 0.188009 20       0
+```
+
+```r
+# El MAD debe calcularse con el comando mad()
+mad(Cu.out$Cu)
+```
+
+```
+[1] 0.133434
+```
+
+---
+## Ambos test asumen normalidad de los datos (incluyendo el dato sospechoso):
+
+
+```r
+shapiro.test(Cu.out$Cu) # Como Cu.out es un data frame debemos usar el signo $ para seleccionar la variable Cu
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  Cu.out$Cu
+W = 0.9013, p-value = 0.04363
+```
+
+---
+## Dos Criterios adicionales: Hampel y `\(Q_{n}\)`:
+
+### Hampel `$$I = [median - 3 \cdot MAD; median + 3 \cdot MAD]$$`
+
+### `\(Q_{n}\)` `$$I = [median - 3 \cdot Q_{n}; median + 3 \cdot Q_{n}]$$`
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.footer[
+Rousseeuw, P.J. and Croux, C. (1993) Alternatives to the Median Absolute Deviation, Journal of the American Statistical Association *88*, 1273-1283.
+]
+
+
+---
+## Criterio Hampel `$$I = [median - 3 \cdot MAD; median + 3 \cdot MAD]$$`
+
+
+```r
+c(median(Cu.out$Cu) - 3*mad(Cu.out$Cu), median(Cu.out$Cu) + 3*mad(Cu.out$Cu))
+```
+
+```
+[1] 0.794698 1.595302
+```
+
+---
+## Criterio `\(Q_{n}\)` `$$I = [median - 3 \cdot Q_{n}; median + 3 \cdot Q_{n}]$$`
+
+
+```r
+library(robustbase)
+c(median(Cu.out$Cu) - 3*Qn(Cu.out$Cu), median(Cu.out$Cu) + 3*Qn(Cu.out$Cu))
+```
+
+```
+[1] 0.7470984 1.6429016
+```
+
+Conclusión: Se elimina el valor sospechoso
+
+---
+## Atención con los outliers pues podrían contener información valiosa
+
+&lt;img src="index_insertimage_22.png" width="40%" /&gt;
+
+
+
+---
+class: center middle inverse
+
+# Análisis de datos NO Normales
+
+---
+## Estimar un intervalo de confianza para la media de las siguientes mediciones de As en pozos de agua `datos_no_normales`:
+
+
+```r
+datos.no.normales &lt;- read_excel('datos_curso.xlsx', sheet = 'datos_no_normales')
+datos.no.normales
+```
+
+```
+# A tibble: 268 x 4
+   Muestra    As    Cl    Co
+     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1       1  2400   6.2  0.42
+ 2       2     6 116    0.45
+ 3       3   904  14.8  0.63
+ 4       4   321  35.9  0.68
+ 5       5  1280  18.9  0.58
+ 6       6   151   7.8  0.35
+ 7       7   141  56.3  0.46
+ 8       8  1050  16    0.59
+ 9       9   511  40.4  0.48
+10      10   688  29.3  0.87
+# ... with 258 more rows
+```
+
+---
+## Boxplot
+
+.pull-left[
+
+```r
+ggplot(datos.no.normales, aes(y = As)) +
+  geom_boxplot() +
+  theme_minimal() +
+  scale_x_discrete() # Elimina el eje X
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-71-1.png)&lt;!-- --&gt;
+]
+
+---
+## Histograma
+
+.pull-left[
+
+```r
+ggplot(datos.no.normales, aes(x = As)) +
+  geom_histogram(col = 'red', fill = 'red', alpha = 0.5) +
+  ggtitle('Histograma de As en agua de pozo [ppm]') +
+  xlab('As [ppm]') +
+  ylab('Cuentas') +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-73-1.png)&lt;!-- --&gt;
+]
+
+---
+## QQ-Plot normalidad
+
+.pull-left[
+
+```r
+ggplot(datos.no.normales, aes(sample = As)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-75-1.png)&lt;!-- --&gt;
+]
+
+---
+## Density plot
+
+.pull-left[
+
+```r
+ggplot(datos.no.normales, aes(x = As)) +
+  geom_density(col = 'red', fill = 'red', alpha = 0.5) +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-77-1.png)&lt;!-- --&gt;
+]
+
+---
+## Test de normalidad de Shapiro
+
+
+```r
+shapiro.test(datos.no.normales$As)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  datos.no.normales$As
+W = 0.42284, p-value &lt; 2.2e-16
+```
+
+---
+## No podemos aplicar la fórmula de intervalo de confianza para la media de datos no normales:
+
+`$$\overline{x} \pm t_{n - 1, \alpha/2}\cdot\frac{s}{\sqrt{n}}$$`
+---
+## Aplicaremos el método *bootstrap* con la librería `boot`:
+
+
+```r
+library(boot)
+
+# Creamos la función que calculará la media de cada bootstrap
+media.boot &lt;- function(x, i) {
+  mean(x[i])
+}
+```
+---
+# Aplicamos el comando `boot` sobre los datos de As y lo guardamos como `As.boot`:
+
+
+```r
+As.boot &lt;- boot(datos.no.normales$As, media.boot, R = 1000)
+As.boot
+```
+
+```
+
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = datos.no.normales$As, statistic = media.boot, R = 1000)
+
+
+Bootstrap Statistics :
+    original    bias    std. error
+t1* 123.8698 0.3576634    18.25977
+```
+
+---
+# Graficamos los promedios de las 1000 muestras bootstraps:
+
+.center[
+
+```r
+plot(As.boot)
+```
+
+![](index_files/figure-html/unnamed-chunk-81-1.png)&lt;!-- --&gt;
+]
+
+---
+## Calculamos el intervalo de confianza para la media de As:
+
+
+```r
+boot.ci(As.boot)
+```
+
+```
+BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 1000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = As.boot)
+
+Intervals : 
+Level      Normal              Basic         
+95%   ( 87.7, 159.3 )   ( 85.6, 156.9 )  
+
+Level     Percentile            BCa          
+95%   ( 90.8, 162.1 )   ( 95.8, 168.5 )  
+Calculations and Intervals on Original Scale
+```
+
+---
+## Bootstrap usando la librería `mosaic`:
+
+
+```r
+library(mosaic)
+As.boot &lt;- do(1000) * mean(~ As, data = resample(datos.no.normales))
+```
+---
+## IC usando el comando `confint`:
+
+```r
+confint(As.boot, level = 0.95, method = "quantile")
+```
+
+```
+  name  lower    upper level     method estimate
+1 mean 91.206 161.7539  0.95 percentile 123.8698
+```
+---
+## Intervalo de confianza para el coeficiente de variación:
+
+```r
+library(mosaic)
+CV.As.boot &lt;- do(1000) * mean(~ As, data = resample(datos.no.normales))/sd(~ As, data = resample(datos.no.normales))*100
+confint(CV.As.boot, level = 0.95, method = "quantile")
+```
+
+```
+     method mean.of.x    lower    upper level
+mean t.test   32.9556 32.65963 33.25158  0.95
+```
+---
+class: center middle inverse
+
+# ¿Cómo calcularía un intervalo de confianza para las concentraciones de Cloruro?
+
+
+
+---
+class: center middle inverse
+
+# ¿Cómo se interpreta un intervalo de confianza? 
+## (suponga 1 - `\(\alpha\)` = 95%)
+
+---
+## https://rpsychologist.com/d3/ci/
+
+.center[
+![Plot title. ](index_insertimage_6.png)
+]
+
+---
+## En un gráfico estático:
+
+
+```r
+library(mosaic)
+set.seed(12364)
+CIsim(n = 10, samples = 100, plot= 'draw', conf.level = 0.95)    
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-86-1.png" width="50%" /&gt;
+
+
+---
+class: center middle inverse
+
+# Test de permutaciones
+## Para datos no normales
+
+---
+## ¿Qué hacer cuando no podemos aplicar el test T debido a no normalidad de los datos?
+
+Ejemplo: Comparación de 2 métodos analíticos sobre la misma muestra.
+
+
+```r
+metodos.no.normales &lt;- read_excel('datos_curso.xlsx', sheet = 'test_permutaciones')
+metodos.no.normales
+```
+
+```
+# A tibble: 20 x 2
+   Metodo Concentracion
+   &lt;chr&gt;          &lt;dbl&gt;
+ 1 ICPMS           26.5
+ 2 ICPMS           26.1
+ 3 ICPMS           27.9
+ 4 ICPMS           25.9
+ 5 ICPMS           27.4
+ 6 ICPMS           29  
+ 7 ICPMS           26  
+ 8 ICPMS           25.9
+ 9 ICPMS           25.8
+10 ICPMS           25.8
+11 AAS             25.9
+12 AAS             25.6
+13 AAS             25  
+14 AAS             26.3
+15 AAS             26.9
+16 AAS             25.1
+17 AAS             25  
+18 AAS             25.3
+19 AAS             25.4
+20 AAS             27.2
+```
+
+
+---
+## Comparación ICPMS vs AAS datos no normales
+
+.pull-left[
+![](index_files/figure-html/unnamed-chunk-88-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-89-1.png)&lt;!-- --&gt;
+]
+
+---
+## Comparación ICPMS vs AAS datos no normales con el package `exactRankTests`:
+
+
+```r
+library(exactRankTests)
+perm.test(Concentracion ~ Metodo, exact = T, data = metodos.no.normales)
+```
+
+```
+
+	2-sample Permutation Test (scores mapped into 1:(m+n) using rounded
+	scores)
+
+data:  Concentracion by Metodo
+T = 39, p-value = 0.0508
+alternative hypothesis: true mu is not equal to 0
+```
+
+
+```r
+t.test(Concentracion ~ Metodo, data = metodos.no.normales)
+```
+
+```
+
+	Welch Two Sample t-test
+
+data:  Concentracion by Metodo
+t = -2.0023, df = 16.324, p-value = 0.06215
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.76902482  0.04902482
+sample estimates:
+  mean in group AAS mean in group ICPMS 
+              25.77               26.63 
+```
+
+---
+class: center middle inverse
+# Test de Wilcoxon
+## Para datos no normales
+
+---
+## Test de Wilcoxon para comparación de métodos ICPMS vs FAAS
+
+
+```r
+wilcox.test(Concentracion ~ Metodo, exact = T, data = metodos.no.normales)
+```
+
+```
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  Concentracion by Metodo
+W = 22, p-value = 0.03742
+alternative hypothesis: true location shift is not equal to 0
+```
+
+
+---
+## R es una calculadora
+
+
+```r
+2 + 2
+```
+
+```
+[1] 4
+```
+
+---
+### R nos permite asignar un valor a una variable y almacenarla
+
+Por ejemplo: asignemos a la variable x el valor 5
+
+
+```r
+x &lt;- 5
+x
+```
+
+```
+[1] 5
+```
+
+```r
+2*x
+```
+
+```
+[1] 10
+```
+ El símbolo `&lt;-` corresponde al operador asignación
+ 
+---
+## Operador concatenación `c()`:
+
+
+```r
+concentracion &lt;- c(0, 10, 20, 30, 40, 50)
+concentracion
+```
+
+```
+[1]  0 10 20 30 40 50
+```
+
+```r
+metodo &lt;- c('icpms', 'faas', 'hplc', 'gc')
+metodo
+```
+
+```
+[1] "icpms" "faas"  "hplc"  "gc"   
+```
+
+---
+## Operador de repetición y autollenado
+
+
+```r
+concentracion &lt;- seq(0, 50, by = 10)
+
+# Repetir la secuencia (icpms, faas) 5 veces
+metodo &lt;- rep(c('icpms', 'faas'), 5)
+metodo
+```
+
+```
+ [1] "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms"
+[10] "faas" 
+```
+
+```r
+# Repetir cada método 5 veces cada uno. Primero icpms, luego faas
+metodo &lt;- rep(c('icpms', 'faas'), each = 5)
+metodo
+```
+
+```
+ [1] "icpms" "icpms" "icpms" "icpms" "icpms" "faas"  "faas"  "faas"  "faas" 
+[10] "faas" 
+```
+
+
+---
+## El `data.frame` es la estructura 2D regular básica de datos (similar a hoja Excel):
+
+
+```r
+# Crearemos un data frame de 2 columnas: Método Analítico y Concentración
+# Primero creamos la variable Metodo (sin acento)
+
+metodo &lt;- rep(c('ICPMS', 'FAAS'), each = 10)
+concentracion &lt;- rep(c(10, 20), each = 10)
+
+# Creamos el data.frame en base a las variables metodo y concentracion y los
+# guardamos con el nombre datos:
+
+datos &lt;- data.frame(metodo, concentracion)
+datos
+```
+
+```
+   metodo concentracion
+1   ICPMS            10
+2   ICPMS            10
+3   ICPMS            10
+4   ICPMS            10
+5   ICPMS            10
+6   ICPMS            10
+7   ICPMS            10
+8   ICPMS            10
+9   ICPMS            10
+10  ICPMS            10
+11   FAAS            20
+12   FAAS            20
+13   FAAS            20
+14   FAAS            20
+15   FAAS            20
+16   FAAS            20
+17   FAAS            20
+18   FAAS            20
+19   FAAS            20
+20   FAAS            20
+```
+
+---
+## Seleccionar con el signo $ una única variable desde un `data.frame`:
+
+
+```r
+# Seleccionemos sólo la concentración del data.frame datos
+datos$concentracion
+```
+
+```
+ [1] 10 10 10 10 10 10 10 10 10 10 20 20 20 20 20 20 20 20 20 20
+```
+
+
+
+---
+class: center middle inverse
+
+# ¿Qué es la investigación reproducible?
+
+---
+## Investigación reproducible
+Have you ever reproduced someone else’s research analysis?
+
+How about reproducing your own old work? What tools did you use?
+
+Do you know how to reproduce your collaborator’s work? Was it hard or easy?
+
+How would you go about extending the analysis further?
+
+If you notice a data error how easy would it be to re-create the analysis?
+
+What if your collaborator is no longer available?
+
+
+---
+## Análisis estadístico a la "*antigua*" (Era pre-R)
+
+
+---
+class: center
+&lt;img src="https://i1.wp.com/blog.rstudio.com/2019/11/18/artist-in-residence/rmarkdown_wizards.png?zoom=2&amp;w=450&amp;ssl=1"&gt;
+
+
+---
+class: center middle inverse
+
+# Análisis de varianza
+### Precisión de repetibilidad y "reproducibilidad" (ISO 5725)
+
+
+---
+### Tetraciclinas en salmón por HPLC-MS/MS
+*4 analistas llevan aplican el mismo SOP, el mismo día con el mismo instrumento*
+
+
+![Plot title. ](index_insertimage_2.png)
+
+
+
+---
+## Transformar los datos del formato *wide* a *long* :
+
+![Plot title. ](index_insertimage_5.png)
+
+---
+## Importamos los datos desde Excel a R:
+
+
+```r
+library(readxl)
+tetra &lt;- read_excel('datos_curso.xlsx', 
+                    sheet = 'anova_long')
+
+tetra
+```
+
+```
+# A tibble: 24 x 2
+   Analista  Concentracion
+   &lt;chr&gt;             &lt;dbl&gt;
+ 1 Analista1          96.2
+ 2 Analista1          92.3
+ 3 Analista1          97.6
+ 4 Analista1          96.6
+ 5 Analista1          88  
+ 6 Analista1          90.1
+ 7 Analista2          84.8
+ 8 Analista2         100  
+ 9 Analista2          97.9
+10 Analista2          96.5
+# ... with 14 more rows
+```
+---
+## EDA
+
+
+.pull-left[
+
+```r
+library(ggplot2)
+ggplot(tetra, aes(x = Analista, y = Concentracion)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-101-1.png)&lt;!-- --&gt;
+]
+
+
+
+---
+class: center middle inverse
+
+# ¿Existen diferencias entre los analistas?
+---
+## Anova de un factor
+
+
+```r
+anova.tetra &lt;- aov(Concentracion ~ Analista, data = tetra)
+summary(anova.tetra)
+```
+
+```
+            Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+Analista     3  431.0  143.67    6.13 0.00395 **
+Residuals   20  468.7   23.44                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+---
+## Anova de un factor: Prueba de Tukey
+
+
+```r
+TukeyHSD(anova.tetra)
+```
+
+```
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Concentracion ~ Analista, data = tetra)
+
+$Analista
+                          diff        lwr       upr     p adj
+Analista2-Analista1  1.6166667 -6.2064725  9.439806 0.9374068
+Analista3-Analista1  2.1333333 -5.6898059  9.956473 0.8699185
+Analista4-Analista1 10.8666667  3.0435275 18.689806 0.0046627
+Analista3-Analista2  0.5166667 -7.3064725  8.339806 0.9976818
+Analista4-Analista2  9.2500000  1.4268608 17.073139 0.0169383
+Analista4-Analista3  8.7333333  0.9101941 16.556473 0.0252701
+```
+
+---
+## Anova de un factor: Prueba de Tukey
+
+
+```r
+plot(TukeyHSD(anova.tetra))
+```
+
+![](index_files/figure-html/unnamed-chunk-104-1.png)&lt;!-- --&gt;
+
+
+---
+## Estimar precisión a partir del ANOVA con el package `lme4`:
+
+
+```r
+library(lme4)
+anova.repetibilidad &lt;- lmer(Concentracion ~ (1|Analista), data = tetra)
+anova.repetibilidad
+```
+
+```
+Linear mixed model fit by REML ['lmerMod']
+Formula: Concentracion ~ (1 | Analista)
+   Data: tetra
+REML criterion at convergence: 146.438
+Random effects:
+ Groups   Name        Std.Dev.
+ Analista (Intercept) 4.477   
+ Residual             4.841   
+Number of obs: 24, groups:  Analista, 4
+Fixed Effects:
+(Intercept)  
+      97.12  
+```
+
+
+---
+class: center middle inverse
+
+# ¿Qué sucede si los residuos del ANOVA no son normales?
+
+---
+## Comparación de 3 métodos analíticos
+
+
+```r
+metodos.no.normales2 &lt;- read_excel('datos_curso.xlsx', sheet = 'anova_no_normal')
+anova.no.normal &lt;- aov(Concentracion ~ Metodo, data = metodos.no.normales2)
+summary(anova.no.normal)
+```
+
+```
+            Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+Metodo       2  11.33   5.665   6.877 0.00386 **
+Residuals   27  22.24   0.824                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
+---
+## Comparación de 3 métodos analíticos
+
+
+```r
+ggplot(metodos.no.normales2, aes(x = Metodo, y = Concentracion, fill = Metodo)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+
+![](index_files/figure-html/unnamed-chunk-107-1.png)&lt;!-- --&gt;
+
+---
+## Comparación de 3 métodos: Análisis de residuos
+
+.pull-left[
+
+```r
+plot(anova.no.normal, which = 2)
+```
+
+![](index_files/figure-html/unnamed-chunk-108-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+
+```r
+shapiro.test(anova.no.normal$residuals)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  anova.no.normal$residuals
+W = 0.84422, p-value = 0.0004703
+```
+]
+
+---
+## Test no parámetrico de Kruskal-Wallis:
+
+
+```r
+kruskal.test(Concentracion ~ Metodo, data = metodos.no.normales2)
+```
+
+```
+
+	Kruskal-Wallis rank sum test
+
+data:  Concentracion by Metodo
+Kruskal-Wallis chi-squared = 11.132, df = 2, p-value = 0.003825
+```
+
+
+
+---
+class: center middle inverse
+
+# ¿Cuál es la máxima diferencia permitida entre duplicados de análisis?
+
+---
+## Límite de repetibilidad (ISO 5725):
+
+`$$r = 2.8\cdot s_{r}$$`
+
+donde:
+
+- `\(r\)` es el límite de repetibiliad y corresponde a la máxima diferencia
+tolerable, en valor absoluto, entre duplicados de análisis llevados
+a cabo en condiciones de repetibilidad.
+- `\(s_{r}\)` es la desviación estándar de repetibilidad
+- El factor 2.8 indica que este límite está construido con un 95% de confianza
+
+---
+## Duplicados de análisis de %Cu en concentrado de Cu:
+
+
+```r
+duplicados &lt;- read_excel('datos_curso.xlsx', sheet = 'duplicados_wide')
+duplicados
+```
+
+```
+# A tibble: 176 x 4
+   ID      Analista  dup1  dup2
+   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
+ 1 QAQC-01 A         30.8  30.5
+ 2 QAQC-02 A         31.9  32.0
+ 3 QAQC-03 A         31.3  31.3
+ 4 QAQC-04 A         31.3  30.9
+ 5 QAQC-05 A         30.7  30.7
+ 6 QAQC-06 A         30.9  30.7
+ 7 QAQC-07 A         31.0  31.2
+ 8 QAQC-08 A         31.5  31.6
+ 9 QAQC-09 A         31.1  32.3
+10 QAQC-10 A         32.0  31.5
+# ... with 166 more rows
+```
+
+---
+## Duplicados de análisis de %Cu en concentrado de Cu:
+
+.pull-left[
+
+```r
+ggplot(duplicados, aes(x = dup1, y = dup2)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = F) +
+  xlab('Duplicado 1 [% Cu]') +
+  ylab('Duplicado 2 [% Cu]') +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-113-1.png)&lt;!-- --&gt;
+]
+
+
+
+---
+## Duplicados de análisis de %Cu en concentrado de Cu por `Analista`
+.pull-left[
+
+```r
+ggplot(duplicados, aes(x = dup1, y = dup2)) +
+  geom_point(aes(col = Analista)) +
+  geom_smooth(method = 'lm', se = F) +
+  xlab('Duplicado 1 [% Cu]') +
+  ylab('Duplicado 2 [% Cu]') +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-115-1.png)&lt;!-- --&gt;
+]
+
+---
+## Cálculo de s de repetibilidad usando ANOVA `\(\implies\)` Formato long
+
+
+```r
+duplicados.long &lt;- read_excel('datos_curso.xlsx', sheet = 'duplicados_long')
+duplicados.long
+```
+
+```
+# A tibble: 352 x 4
+   ID      Analista Duplicado Concentracion
+   &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;         &lt;dbl&gt;
+ 1 QAQC-01 A                1          30.8
+ 2 QAQC-02 A                1          31.9
+ 3 QAQC-03 A                1          31.3
+ 4 QAQC-04 A                1          31.3
+ 5 QAQC-05 A                1          30.7
+ 6 QAQC-06 A                1          30.9
+ 7 QAQC-07 A                1          31.0
+ 8 QAQC-08 A                1          31.5
+ 9 QAQC-09 A                1          31.1
+10 QAQC-10 A                1          32.0
+# ... with 342 more rows
+```
+
+---
+## Cálculo de s de repetibilidad usando ANOVA `\(\implies\)` Formato long
+
+
+
+```r
+library(lme4)
+anova.repetibilidad &lt;- lmer(Concentracion ~ (1|ID), data = duplicados.long)
+anova.repetibilidad
+```
+
+```
+Linear mixed model fit by REML ['lmerMod']
+Formula: Concentracion ~ (1 | ID)
+   Data: duplicados.long
+REML criterion at convergence: 767.4585
+Random effects:
+ Groups   Name        Std.Dev.
+ ID       (Intercept) 1.7935  
+ Residual             0.2029  
+Number of obs: 352, groups:  ID, 176
+Fixed Effects:
+(Intercept)  
+      29.75  
+```
+
+
+
+
+
+---
+class: center middle inverse
+
+# Calibración lineal
+
+---
+## Modelo lineal de calibración:
+
+`$$y = \beta_{0} + \beta_{1}x + \epsilon$$`
+donde:
+- `\(y\)` es la respuesta instrumental (área, absorbancia, mV, etc.)
+- `\(\beta_{0}\)` es el intercepto (¿Concentración = 0?)
+- `\(\beta_{1}\)` es la pendiente de la curva de calibración (*sensibilidad*)
+- `\(\epsilon\)` es un error aleatorio Normal con media 0 y varianza constante `\(\sigma^{2}\)`
+
+Por ejemplo: Ecuación de Lambert-Beer
+
+`$$\underbrace{A}_\text{y} = \underbrace{\epsilon \cdot b}_{\beta_1} \cdot \underbrace{C}_\text{x}$$`
+
+
+---
+class: center middle inverse
+
+# ¿Cómo ajustamos un modelo lineal en R?
+
+
+---
+## Ajuste lineal con el comando `lm`:
+
+
+```r
+# Genéricamente este es el comando
+lm(y ~ x, data = data)
+```
+
+Podemos guardar todo el análisis y sus gráficos, por ejemplo, en `fit.lineal`:
+
+
+```r
+fit.lineal &lt;- lm(y ~ x, data = data)
+```
+
+---
+## Ejemplo de calibración lineal
+
+
+```r
+# Importamos los datos de la hoja `calibracion`:
+calibracion &lt;- read_excel('datos_curso.xlsx', sheet = 'Calibracion')
+calibracion
+```
+
+```
+# A tibble: 10 x 2
+       x     y
+   &lt;dbl&gt; &lt;dbl&gt;
+ 1     1 0.026
+ 2     2 0.051
+ 3     5 0.126
+ 4    10 0.247
+ 5    20 0.47 
+ 6    40 0.867
+ 7    60 1.15 
+ 8    80 1.40 
+ 9    90 1.47 
+10   100 1.50 
+```
+
+---
+## Graficamos la curva de calibración
+
+.pull-left[
+
+```r
+ggplot(calibracion, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal() +
+  ggtitle('Curva de calibración') +
+  xlab('Concentracion [ppm]') +
+  ylab('Respuesta instrumental')
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-122-1.png)&lt;!-- --&gt;
+]
+
+---
+## Ajustamos el modelo lineal de calibración con el comando `lm` :
+
+
+```r
+fit.lineal &lt;- lm(y ~ x, data = calibracion)
+summary(fit.lineal)
+```
+
+```
+
+Call:
+lm(formula = y ~ x, data = calibracion)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15737 -0.06613 -0.01665  0.06256  0.14949 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.0929378  0.0484258   1.919   0.0912 .  
+x           0.0156143  0.0008808  17.728 1.05e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1027 on 8 degrees of freedom
+Multiple R-squared:  0.9752,	Adjusted R-squared:  0.9721 
+F-statistic: 314.3 on 1 and 8 DF,  p-value: 1.049e-07
+```
+
+
+---
+## Agregamos la línea ajusta del modelo lineal 
+
+.pull-left[
+
+```r
+ggplot(calibracion, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal() +
+  ggtitle('Curva de calibración') +
+  xlab('Concentracion [ppm]') +
+  ylab('Respuesta instrumental') +
+  geom_smooth(method = 'lm', se = F) # Sólo la recta
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-125-1.png)&lt;!-- --&gt;
+]
+
+---
+## Agregamos las bandas de error de calibración:
+
+.pull-left[
+
+```r
+ggplot(calibracion, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal() +
+  ggtitle('Curva de calibración') +
+  xlab('Concentracion [ppm]') +
+  ylab('Respuesta instrumental') +
+  geom_smooth(method = 'lm', se = T) # Recta y bandas de error
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-127-1.png)&lt;!-- --&gt;
+]
+
+
+---
+class: center middle inverse
+
+# ¿Es adecuado el modelo lineal para los datos de calibración?
+## Graficar la curva
+## Análsis de resiudos
+## Test formal de linealidad
+
+---
+### Análisis de residuos `\(e_{i} = \hat{y_{i}} - y_{i}\)`
+
+
+```r
+plot(fit.lineal, which = 1)
+```
+
+![](index_files/figure-html/unnamed-chunk-128-1.png)&lt;!-- --&gt;
+
+
+---
+class: center middle inverse
+
+# ¿Cómo evaluamos formalmente la linelidad de una curva de calibración?
+
+---
+## Cuarteto de Anscombe:
+
+.pull-left[
+![](index_files/figure-html/anscombe-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+Los 4 conjuntos de datos tienen la misma pendiente, intercepto, error de
+calibración y **¡Coeficiente de correlación!**
+]
+---
+class: center middle inverse
+
+# Tests de linealidad
+## Test de Mandel (ISO 8466-1)
+## Test de Carencia de Ajuste (ISO 11095)
+---
+## Test de Mandel
+
+- Basado en norma ISO 8466-1
+- Requiere al menos `\(n \geq 6\)` calibrantes
+- Basado en **comparar** dos modelos de calibración:
+  - Modelo lineal versus modelo no lineal
+  - ¿Cuál modelo no lineal compararemos?
+  
+`$$y = \beta_{0} + \beta_{1}x + \beta_{2}x^2$$`
+  
+---
+## Importamos los datos desde Excel a R y los asignamos a `datos.mandel`
+
+
+```r
+datos.mandel &lt;- read_excel('datos_curso.xlsx', sheet = 'test_mandel')
+datos.mandel
+```
+
+```
+# A tibble: 11 x 2
+       x y     
+   &lt;dbl&gt; &lt;chr&gt; 
+ 1     0 -0.007
+ 2    10 0.071 
+ 3    20 0.146 
+ 4    30 0.212 
+ 5    40 0.274 
+ 6    50 0.334 
+ 7    60 0.385 
+ 8    70 0.43  
+ 9    80 0.473 
+10    90 0.511 
+11   100 0.546 
+```
+
+---
+## Graficamos la curva de calibración con el package `ggplot2`:
+  
+.pull-left[
+
+```r
+ggplot(datos.mandel, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-131-1.png)&lt;!-- --&gt;
+]
+---
+## Ajustamos los modelos de calibración lineal y cuadrático:
+
+Modelo lineal
+
+
+```r
+fit.lineal &lt;- lm(y ~ x, data = datos.mandel)
+summary(fit.lineal)
+```
+
+```
+
+Call:
+lm(formula = y ~ x, data = datos.mandel)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.038682 -0.015818  0.004264  0.018723  0.027182 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.0316818  0.0139209   2.276   0.0489 *  
+x           0.0055027  0.0002353  23.385 2.28e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.02468 on 9 degrees of freedom
+Multiple R-squared:  0.9838,	Adjusted R-squared:  0.982 
+F-statistic: 546.9 on 1 and 9 DF,  p-value: 2.277e-09
+```
+
+---
+## Ajustamos los modelos de calibración lineal y cuadrático:
+
+Modelo cuadrático
+
+
+```r
+fit.cuadratico &lt;- lm(y ~ x + I(x^2), data = datos.mandel)
+summary(fit.cuadratico)
+```
+
+```
+
+Call:
+lm(formula = y ~ x + I(x^2), data = datos.mandel)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0020126 -0.0008098 -0.0005007  0.0010925  0.0019487 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -6.168e-03  1.161e-03  -5.311 0.000719 ***
+x            8.026e-03  5.403e-05 148.546 4.72e-15 ***
+I(x^2)      -2.523e-05  5.204e-07 -48.489 3.62e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.001524 on 8 degrees of freedom
+Multiple R-squared:  0.9999,	Adjusted R-squared:  0.9999 
+F-statistic: 7.285e+04 on 2 and 8 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+## Análisis de residuos de ambos modelos:
+
+.pull-left[
+
+```r
+plot(fit.lineal, which = 1)
+```
+
+![](index_files/figure-html/unnamed-chunk-134-1.png)&lt;!-- --&gt;
+]
+
+.pull.right[
+
+```r
+plot(fit.cuadratico, which = 1)
+```
+
+![](index_files/figure-html/unnamed-chunk-135-1.png)&lt;!-- --&gt;
+]
+---
+## Test de Mandel
+
+
+```r
+anova(fit.lineal, fit.cuadratico)
+```
+
+```
+Analysis of Variance Table
+
+Model 1: y ~ x
+Model 2: y ~ x + I(x^2)
+  Res.Df       RSS Df Sum of Sq      F    Pr(&gt;F)    
+1      9 0.0054816                                  
+2      8 0.0000186  1  0.005463 2351.1 3.621e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+---
+## Test de Carencia de ajuste (*Lack-of-fit*):
+
+- Basado en la norma ISO 11095
+- Requiere el uso de replicados **verdaderos** de los calibrantes
+- Responde a la pregunta: "¿Es adecuado el modelo de calibración propuesto?"
+- Este test está basado en comparar dos estimadores del error aleatorio:
+  1. Error puro o experimental
+  2. Error de carencia de ajuste o _lack of fit_
+
+---
+## Importamos los datos desde Excel a R y los asignamos a `datos.lof`:
+
+
+```r
+datos.lof &lt;- read_excel('datos_curso.xlsx', sheet = 'test_lof')
+datos.lof
+```
+
+```
+# A tibble: 15 x 2
+       x     y
+   &lt;dbl&gt; &lt;dbl&gt;
+ 1  0       88
+ 2  0       15
+ 3  0       51
+ 4  0.25   771
+ 5  0.25   773
+ 6  0.25   804
+ 7  0.5   1529
+ 8  0.5   1495
+ 9  0.5   1506
+10  0.75  2261
+11  0.75  2294
+12  0.75  2277
+13  1     3028
+14  1     3022
+15  1     3009
+```
+
+---
+## Graficamos la curva de calibración con el package `ggplot2`:
+  
+.pull-left[
+
+```r
+ggplot(datos.lof, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal()
+```
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-139-1.png)&lt;!-- --&gt;
+]
+---
+## Ajustamos un modelo lineal y lo asignamos a `fit.lineal.lof`:
+
+
+```r
+fit.lineal.lof &lt;- lm(y ~ x, data = datos.lof)
+summary(fit.lineal.lof)
+```
+
+```
+
+Call:
+lm(formula = y ~ x, data = datos.lof)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-33.20 -13.07   0.80  11.30  46.07 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   41.933      9.727   4.311 0.000846 ***
+x           2972.533     15.884 187.140  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 21.75 on 13 degrees of freedom
+Multiple R-squared:  0.9996,	Adjusted R-squared:  0.9996 
+F-statistic: 3.502e+04 on 1 and 13 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+## Análisis de residuos
+
+
+```r
+plot(fit.lineal.lof, which = 1)
+```
+
+![](index_files/figure-html/unnamed-chunk-141-1.png)&lt;!-- --&gt;
+
+
+---
+
+
+## Aplicamos el test de carencia de ajuste del package `olsrr`:
+
+
+```r
+library(olsrr) # Cargamos el package olsrr
+ols_pure_error_anova(fit.lineal.lof)
+```
+
+```
+Lack of Fit F Test 
+--------------
+Response :   y 
+Predictor:   x 
+
+                         Analysis of Variance Table                          
+----------------------------------------------------------------------------
+                DF      Sum Sq         Mean Sq      F Value        Pr(&gt;F)    
+----------------------------------------------------------------------------
+x                1    16567414.53    16567414.53    35365.19    1.024575e-23 
+Residual        13       6149.867       473.0667                             
+ Lack of fit     3        1465.20         488.40     1.04255       0.4155031 
+ Pure Error     10       4684.667       468.4667                             
+----------------------------------------------------------------------------
+```
+
+
+---
+class: center middle inverse
+
+# Incertidumbre de una curva de calibración lineal
+---
+
+## Incertdumbre de calibración lineal
+A partir de la ecuación `\(y = \beta_{0} + \beta_{1}x\)` obtenemos la concentración de una 
+muestra problema `\(x_{0}\)` cuya señal instrumental es `\(y_{0}\)`:
+
+`$$x_{0} = \frac{y_{0} - \beta_{0}}{\beta_{1}}$$`
+
+¿Cuál es la incertidumbre de esta concentración?
+---
+## Incertidumbre de calibración lineal
+
+
+`$$u(x_{0}) = \frac{\sigma_{y/x}}{\beta_{1}}
+  \sqrt{\frac{1}{n} + \frac{1}{m_{0}} + \frac{(x_{0} - \overline{x})^2}
+  {\sum_{i}^{n} (x_{i} - \overline{x})^2}}$$`
+
+donde:
+
+- `\(\sigma_{y/x}\)` es la desviación estándar del error aleatorio `\(\epsilon\)` o
+error de calibración
+- `\(n\)` es el número de calibrantes independientes
+- `\(m_{0}\)` es el número de replicados independientes de la muestra problema
+- `\(\overline{x}\)` es el promedio de las concentraciones de los calibrantes
+
+---
+## Incertidumbre de calibración lineal
+
+.pull-left[
+![](index_files/figure-html/unnamed-chunk-143-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+- Esta incertidumbre **solo** refleja el error instrumental
+- **NO** incluye la incertidumbre de los calibrantes
+- Si se desea incluir la incertidumbre de los calibrantes se debe emplear
+el modelo "Regresión con error en ambos ejes"
+
+]
+---
+## Ejemplo: Concentración de Cu en mineral por AAS con digestión ácida
+
+.pull-left[
+
+```r
+u.Cu &lt;- read_excel('datos_curso.xlsx', 
+                   sheet = 'incertidumbre_lineal')
+u.Cu
+```
+
+```
+# A tibble: 8 x 2
+      x      y
+  &lt;dbl&gt;  &lt;dbl&gt;
+1     0 -0.005
+2     1  0.026
+3     2  0.051
+4     5  0.126
+5    10  0.247
+6    20  0.47 
+7    30  0.743
+8    40  0.956
+```
+
+
+```r
+ggplot(u.Cu, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal()
+```
+
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-146-1.png)&lt;!-- --&gt;
+]
+---
+## Ejemplo: Concentración de Cu en mineral por AAS con digestión ácida
+
+.pull-left[
+
+```r
+u.Cu &lt;- read_excel('datos_curso.xlsx', 
+                   sheet = 'incertidumbre_lineal')
+u.Cu
+```
+
+```
+# A tibble: 8 x 2
+      x      y
+  &lt;dbl&gt;  &lt;dbl&gt;
+1     0 -0.005
+2     1  0.026
+3     2  0.051
+4     5  0.126
+5    10  0.247
+6    20  0.47 
+7    30  0.743
+8    40  0.956
+```
+
+
+```r
+ggplot(u.Cu, aes(x = x, y = y)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = F) +
+  theme_minimal() +
+  xlab('Cu [ppm]')
+```
+
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-149-1.png)&lt;!-- --&gt;
+]
+
+---
+## Test de linealidad de Mandel
+
+
+```r
+fit.Cu.lineal &lt;- lm(y ~ x, data = u.Cu)
+fit.Cu.cuadratico &lt;- lm(y ~ x + I(x^2), data = u.Cu)
+anova(fit.Cu.lineal, fit.Cu.cuadratico)
+```
+
+```
+Analysis of Variance Table
+
+Model 1: y ~ x
+Model 2: y ~ x + I(x^2)
+  Res.Df        RSS Df  Sum of Sq      F Pr(&gt;F)
+1      6 0.00069485                            
+2      5 0.00065672  1 3.8131e-05 0.2903 0.6131
+```
+
+---
+## La absorbancia de la muestra problema es `\(y_{0} = 0.250\)`
+### ¿Cuál es la concentración de la muestra en [ppm]?
+### ¿Cuál es la incertidumbre de esta concentración?
+
+&gt; Resolveremos estas interrogantes utilizando el package `chemCal`
+
+---
+## Comando `inverse.predict` del package `chemCal`:
+
+
+```r
+library(chemCal)
+inverse.predict(fit.Cu.lineal, new = 0.250)
+```
+
+```
+$Prediction
+[1] 10.31399
+
+$`Standard Error`
+[1] 0.4751805
+
+$Confidence
+[1] 1.162725
+
+$`Confidence Limits`
+[1]  9.151266 11.476715
+```
+---
+class: center middle inverse
+
+# ¿Cómo estimar la incertidumbre de calibración 
+# de una curva no lineal?
+
+
+---
+## ¿Cuál modelo de calibración no lineal?
+
+Existen varios modelos de calibración no lineal:
+
+1. Polinomios
+2. New Rational (en realidad se llaman *aproximaciones de Padé*)
+3. Splines
+4. Loess
+5. etc.
+
+En este ejemplo veremos el caso del modelo cuadrático siguiendo las 
+directrices de la guía ISO 8466-2.
+&lt;br&gt;
+&lt;br&gt;
+
+
+.footer[
+ISO 8466-2:2001 *Water quality -- Calibration and evaluation of 
+analytical methods and estimation of performance characteristics -- Part 2: 
+Calibration strategy for non-linear second-order calibration functions.*
+]
+
+---
+## Modelo de calibración cuadrática:
+
+`$$y = \beta_{0} + \beta_{1}x + \beta_{2}x^2 + \epsilon$$`
+
+---
+## Incertidumbre expandida de calibración cuadrática ISO 8466-2 (eq N° 27):
+&lt;br&gt;
+&lt;br&gt;
+`$$I(\hat{x}) = \frac{s_{y} \cdot t_{n - 3,\, 95\%}}{b + 2c\hat{x}} \cdot
+            \sqrt{\frac{1}{N} + \frac{1}{\hat{N}} + 
+            \frac{(\hat{x} - \overline{x})^2 \, Q_{x^4} + 
+            \left(\hat{x}^2 - \frac{\sum x_{i}^{2}}{N} \right)^2 Q_{xx} -
+            2(\hat{x} - \overline{x}) 
+            \left(\hat{x}^2 - \frac{\sum x_{i}^{2}}{N} \right) Q_{x^3}}
+            {Q_{x^4} Q_{xx} - \left( Q_{x^3} \right)^2}}$$`
+
+donde:        
+`$$s_{y} = \sqrt{\frac{\sum (y_{i} -\hat{y})^2}{N - 3}}$$`
+
+.footer[
+Para una discusión en detalle y su comparación con el Método de Monte Carlo https://www.analytical.cl/post/incertidumbre-de-una-calibracion-no-lineal/
+]
+
+---
+## Comparación incertidumbres de calibración lineal vs no lineal:
+
+.pull-left[
+![](index_files/figure-html/patch-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-152-1.png)&lt;!-- --&gt;
+]
+
+---
+### Ejemplo : % Cu en mineral curva extendida por AAS hoja `incertidumbre_no_lineal`:
+
+
+
+
+.pull-left[
+
+```r
+u.Cu.no.lineal &lt;- read_excel('datos_curso.xlsx', 
+                             sheet = 'incertidumbre_no_lineal')
+u.Cu.no.lineal
+```
+
+```
+# A tibble: 8 x 2
+      x     y
+  &lt;dbl&gt; &lt;dbl&gt;
+1     1 0.026
+2     2 0.051
+3     5 0.126
+4    10 0.247
+5    20 0.47 
+6    40 0.867
+7    60 1.15 
+8    80 1.34 
+```
+
+
+```r
+ggplot(u.Cu.no.lineal, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal()
+```
+
+]
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-155-1.png)&lt;!-- --&gt;
+]
+---
+## Test de linealidad de Mandel
+
+
+```r
+fit.Cu.lineal &lt;- lm(y ~ x, data = u.Cu.no.lineal)
+fit.Cu.cuadratico &lt;- lm(y ~ x + I(x^2), data = u.Cu.no.lineal)
+anova(fit.Cu.lineal, fit.Cu.cuadratico)
+```
+
+```
+Analysis of Variance Table
+
+Model 1: y ~ x
+Model 2: y ~ x + I(x^2)
+  Res.Df      RSS Df Sum of Sq      F    Pr(&gt;F)    
+1      6 0.035159                                  
+2      5 0.000092  1  0.035067 1898.7 1.201e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+---
+## Usaremos el comando `invest` del package `investr`.
+### La señal instrumental de la muestra problema es `\(y_{0} = 0.8\)`
+
+
+```r
+# y0 es la señal de la muestra problema y0 = 0.8 UA
+library(investr) 
+x.hat &lt;- invest(fit.Cu.cuadratico, data = u.Cu.no.lineal, y0 = 0.8, interval = 'Wald')
+x.hat
+```
+
+```
+  estimate      lower      upper         se 
+36.4441523 35.6907603 37.1975444  0.2930823 
+```
+
+donde:
+
+- `estimate` es la concentración de la muestra problema
+- `upper` es el extremo superior de la incertidumbre expandida `\(I(\hat{x})\)`
+- `lower` es el extremo inferior de la incertidumbre expandida `\(I(\hat{x})\)`
+- `se` es la incertidumbre estándar de calibración `\(u_{\hat{x}}\)`
+
+Note que si quisiéramos obener `\(I(\hat{x})\)` a partir de esta tabla, tendríamos 
+que hacer la siguiente operación `\(I(\hat{x}) =\)` `upper` - `estimate`:
+
+
+```r
+x.hat$upper - x.hat$estimate
+```
+
+```
+[1] 0.753392
+```
+
+---
+## Usaremos el comando `invest` del package `investr`.
+### La señal instrumental de la muestra problema es `\(y_{0} = 0.8\)`
+
+
+donde:
+
+- `estimate` es la concentración de la muestra problema
+- `upper` es el extremo superior de la incertidumbre expandida `\(I(\hat{x})\)`
+- `lower` es el extremo inferior de la incertidumbre expandida `\(I(\hat{x})\)`
+- `se` es la incertidumbre estándar de calibración `\(u_{\hat{x}}\)`
+
+Note que si quisiéramos obener `\(I(\hat{x})\)` a partir de esta tabla, tendríamos 
+que hacer la siguiente operación:
+&lt;br&gt;
+`\(I(\hat{x}) =\)` `upper` - `estimate`:
+
+
+```r
+x.hat$upper - x.hat$estimate
+```
+
+```
+[1] 0.753392
+```
+
+Por lo tanto, la concentración de la muestra problema es 
+`\(36.4 \pm 0.8\)` ppm
+---
+### Esta incertidumbre sólo considera la incertidumbre del instrumento, no incorpora la incertidumbre de los calibrantes. Se debe utilizar el método de _**Regresión con error en ambos ejes**_
+.pull-left[
+![](index_files/figure-html/unnamed-chunk-159-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-160-1.png)&lt;!-- --&gt;
+]
+---
+class: center middle inverse
+
+# La curva de calibración ¿pasa por el origen?
+
+---
+## Test sobre el intercepto
+
+Prueba de hipótesis 
+
+- `\(H_{0}\)` : El intercepto es igual a 0 (por lo tanto, pasa por el origen)
+- `\(H_{1}\)` : El intercepto es distinto de 0
+
+
+```r
+summary(fit.Cu.lineal)
+```
+
+```
+
+Call:
+lm(formula = y ~ x, data = u.Cu.no.lineal)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.104892 -0.048834 -0.006676  0.051465  0.110917 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.063274   0.037888    1.67    0.146    
+x           0.017320   0.000973   17.80 2.02e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.07655 on 6 degrees of freedom
+Multiple R-squared:  0.9814,	Adjusted R-squared:  0.9783 
+F-statistic: 316.9 on 1 and 6 DF,  p-value: 2.02e-06
+```
+
+
+
+----
+## ¿Cómo eliminar un punto de la curva de calibración?
+
+---
+## https://rpsychologist.com/correlation/
+![Plot title. ](index_insertimage_9.png)
+
+---
+## ¿Eliminar un punto?: Análisis de residuos
+
+.pull-left[
+
+```r
+plot(fit.Cu.lineal, which = 3)
+```
+
+![](index_files/figure-html/unnamed-chunk-162-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+
+```r
+plot(fit.Cu.lineal, which = 4)
+```
+
+![](index_files/figure-html/unnamed-chunk-163-1.png)&lt;!-- --&gt;
+]
+
+---
+## Diseñar una buena curva de calibración
+
+.pull-left[
+1. la U de calibración de minimiza al centro de la curva
+2. utilizar todo el rango lineal
+3. datos equiespaciados (al menos durante la validación)
+4. aumentando el número de calibrantes
+5. aumentando el número de replicados de la muestra problema
+]
+
+.pull-right[
+&lt;img src="index_insertimage_21.png" width="80%" /&gt;
+]
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+
+<script>
+const options = {
+  strings: [
+    '<pre>data["químico"]</pre>', '<pre>data["bioquímico"]</pre>', '<pre>data["magíster en estadística"]</pre>'
+  ],
+  typeSpeed: 60,
+  backSpeed: 20,
+  cursorChar: '',
+  loop: true
+};
+
+const typed = new Typed('.typed', options);
+const typed2 = new Typed('.typed-eg', options);
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
