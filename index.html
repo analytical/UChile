@@ -328,7 +328,7 @@ x &lt;- rnorm(100, 120, 10)
 hist(x)
 ```
 
-![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" width="504" /&gt;
 
 
 ---
@@ -340,7 +340,7 @@ mean(x)
 ```
 
 ```
-[1] 119.0935
+[1] 118.7937
 ```
 
 ```r
@@ -348,7 +348,7 @@ sd(x)
 ```
 
 ```
-[1] 9.362974
+[1] 9.481865
 ```
 
 
@@ -440,7 +440,7 @@ ggplot(eda, aes(x = Analista, y = Concentracion)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-17-1.png" width="504" /&gt;
 ]
 
 ---
@@ -458,7 +458,7 @@ ggplot(eda, aes(x = Analista, y = Concentracion, fill = Analista)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-19-1.png" width="504" /&gt;
 ]
 
 ---
@@ -474,7 +474,7 @@ ggplot(eda, aes(x = Concentracion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-21-1.png" width="504" /&gt;
 ]
 
 ---
@@ -491,7 +491,7 @@ ggplot(eda, aes(x = Concentracion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-23-1.png" width="504" /&gt;
 ]
 
 ---
@@ -512,7 +512,7 @@ ggplot(eda, aes(x = Concentracion, fill = Analista)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-25-1.png" width="504" /&gt;
 ]
 
 ---
@@ -529,7 +529,7 @@ ggplot(eda, aes(x = Concentracion, fill = Analista)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-27-1.png" width="504" /&gt;
 ]
 ---
 ## Density plot ¿Cómo podría diferenciar a los analistas?
@@ -545,7 +545,7 @@ ggplot(eda, aes(x = Concentracion, fill = Analista, col = Analista)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-29-1.png" width="504" /&gt;
 ]
 
 ---
@@ -562,7 +562,7 @@ ggplot(eda, aes(sample = Concentracion)) +
 ]
 
 .pull-rigth[
-![](index_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-31-1.png" width="504" /&gt;
 ]
 
 ---
@@ -601,7 +601,7 @@ ggplot(peso, aes(y = Peso_baja_resolucion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-34-1.png" width="504" /&gt;
 ]
 
 ---
@@ -618,7 +618,7 @@ ggplot(peso, aes(sample = Peso_baja_resolucion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-36-1.png" width="504" /&gt;
 ]
 
 ---
@@ -635,7 +635,7 @@ ggplot(peso, aes(sample = Peso_alta_resolucion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-38-1.png" width="504" /&gt;
 ]
 
 ---
@@ -650,7 +650,7 @@ dotPlot(~ Peso_baja_resolucion, data = peso)
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-40-1.png" width="504" /&gt;
 ]
 
 
@@ -710,7 +710,7 @@ shapiro.test(x.normal)
 	Shapiro-Wilk normality test
 
 data:  x.normal
-W = 0.96147, p-value = 0.5736
+W = 0.98472, p-value = 0.9798
 ```
 
 
@@ -725,7 +725,7 @@ ggplot(datos.normales, aes(sample = x.normal)) +
 
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-44-1.png" width="504" /&gt;
 ]
 
 ---
@@ -750,7 +750,7 @@ ic
 ```
 
 ```
-[1]  97.57214 105.21980
+[1]  97.57888 108.19032
 ```
 
 ---
@@ -769,13 +769,13 @@ t.test(x.normal)
 	One Sample t-test
 
 data:  x.normal
-t = 55.5, df = 19, p-value &lt; 2.2e-16
+t = 40.586, df = 19, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
-  97.57214 105.21980
+  97.57888 108.19032
 sample estimates:
 mean of x 
-  101.396 
+ 102.8846 
 ```
 
 ---
@@ -792,7 +792,7 @@ ci(x.normal)
 
 ```
   Estimate   CI lower   CI upper Std. Error 
-101.395970  97.572137 105.219803   1.826942 
+102.884597  97.578877 108.190318   2.534955 
 ```
 
 
@@ -901,11 +901,11 @@ Cu
 ### Comparar la concentración de %Cu en una aleación cuya especificación es de `\(\mu = 92\%\)`
 
 .pull-left[
-![](index_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-50-1.png" width="504" /&gt;
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-51-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-51-1.png" width="504" /&gt;
 ]
 
 
@@ -1312,7 +1312,7 @@ Todos los valores fuera del siguiente intervalo son considerados como outliers:
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-70-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-70-1.png" width="504" /&gt;
 ]
 ---
 ## Test de Dixon con el package `outliers`:
@@ -1476,7 +1476,7 @@ ggplot(datos.no.normales, aes(y = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-79-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-79-1.png" width="504" /&gt;
 ]
 
 ---
@@ -1494,7 +1494,7 @@ ggplot(datos.no.normales, aes(x = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-81-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-81-1.png" width="504" /&gt;
 ]
 
 ---
@@ -1510,7 +1510,7 @@ ggplot(datos.no.normales, aes(sample = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-83-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-83-1.png" width="504" /&gt;
 ]
 
 ---
@@ -1525,7 +1525,7 @@ ggplot(datos.no.normales, aes(x = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-85-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-85-1.png" width="504" /&gt;
 ]
 
 ---
@@ -1592,7 +1592,7 @@ t1* 123.8698 0.3576634    18.25977
 plot(As.boot)
 ```
 
-![](index_files/figure-html/unnamed-chunk-89-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-89-1.png" width="504" /&gt;
 ]
 
 ---
@@ -1708,10 +1708,10 @@ metodos.no.normales
 ## Comparación ICPMS vs AAS datos no normales
 
 .pull-left[
-![](index_files/figure-html/unnamed-chunk-95-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-95-1.png" width="504" /&gt;
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-96-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-96-1.png" width="504" /&gt;
 ]
 
 ---
@@ -1856,7 +1856,7 @@ ggplot(tetra, aes(x = Analista, y = Concentracion)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-102-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-102-1.png" width="504" /&gt;
 ]
 
 
@@ -1914,7 +1914,7 @@ Analista4-Analista3  8.7333333  0.9101941 16.556473 0.0252701
 plot(TukeyHSD(anova.tetra))
 ```
 
-![](index_files/figure-html/unnamed-chunk-105-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-105-1.png" width="504" /&gt;
 
 
 ---
@@ -1977,7 +1977,7 @@ ggplot(metodos.no.normales2, aes(x = Metodo, y = Concentracion, fill = Metodo)) 
   theme_minimal()
 ```
 
-![](index_files/figure-html/unnamed-chunk-108-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-108-1.png" width="504" /&gt;
 
 ---
 ## Comparación de 3 métodos: Análisis de residuos
@@ -1988,7 +1988,7 @@ ggplot(metodos.no.normales2, aes(x = Metodo, y = Concentracion, fill = Metodo)) 
 plot(anova.no.normal, which = 2)
 ```
 
-![](index_files/figure-html/unnamed-chunk-109-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-109-1.png" width="504" /&gt;
 ]
 .pull-right[
 
@@ -2082,7 +2082,7 @@ ggplot(duplicados, aes(x = dup1, y = dup2)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-114-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-114-1.png" width="504" /&gt;
 ]
 
 
@@ -2101,7 +2101,7 @@ ggplot(duplicados, aes(x = dup1, y = dup2)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-116-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-116-1.png" width="504" /&gt;
 ]
 
 ---
@@ -2244,7 +2244,7 @@ ggplot(calibracion, aes(x = x, y = y)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-123-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-123-1.png" width="504" /&gt;
 ]
 
 ---
@@ -2295,7 +2295,7 @@ ggplot(calibracion, aes(x = x, y = y)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-126-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-126-1.png" width="504" /&gt;
 ]
 
 ---
@@ -2315,7 +2315,7 @@ ggplot(calibracion, aes(x = x, y = y)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-128-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-128-1.png" width="504" /&gt;
 ]
 
 
@@ -2335,7 +2335,7 @@ class: center middle inverse
 plot(fit.lineal, which = 1)
 ```
 
-![](index_files/figure-html/unnamed-chunk-129-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-129-1.png" width="504" /&gt;
 
 
 ---
@@ -2347,7 +2347,7 @@ class: center middle inverse
 ## Cuarteto de Anscombe:
 
 .pull-left[
-![](index_files/figure-html/anscombe-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/anscombe-1.png" width="504" /&gt;
 ]
 .pull-right[
 Los 4 conjuntos de datos tienen la misma pendiente, intercepto, error de
@@ -2408,7 +2408,7 @@ ggplot(datos.mandel, aes(x = x, y = y)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-132-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-132-1.png" width="504" /&gt;
 ]
 ---
 ## Ajustamos los modelos de calibración lineal y cuadrático:
@@ -2484,7 +2484,7 @@ F-statistic: 7.285e+04 on 2 and 8 DF,  p-value: &lt; 2.2e-16
 plot(fit.lineal, which = 1)
 ```
 
-![](index_files/figure-html/unnamed-chunk-135-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-135-1.png" width="504" /&gt;
 ]
 
 .pull.right[
@@ -2493,7 +2493,7 @@ plot(fit.lineal, which = 1)
 plot(fit.cuadratico, which = 1)
 ```
 
-![](index_files/figure-html/unnamed-chunk-136-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-136-1.png" width="504" /&gt;
 ]
 ---
 ## Test de Mandel
@@ -2567,7 +2567,7 @@ ggplot(datos.lof, aes(x = x, y = y)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-140-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-140-1.png" width="504" /&gt;
 ]
 ---
 ## Ajustamos un modelo lineal y lo asignamos a `fit.lineal.lof`:
@@ -2607,7 +2607,7 @@ F-statistic: 3.502e+04 on 1 and 13 DF,  p-value: &lt; 2.2e-16
 plot(fit.lineal.lof, which = 1)
 ```
 
-![](index_files/figure-html/unnamed-chunk-142-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-142-1.png" width="504" /&gt;
 
 
 ---
@@ -2672,7 +2672,7 @@ error de calibración
 ## Incertidumbre de calibración lineal
 
 .pull-left[
-![](index_files/figure-html/unnamed-chunk-144-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-144-1.png" width="504" /&gt;
 ]
 .pull-right[
 - Esta incertidumbre **solo** refleja el error instrumental
@@ -2715,7 +2715,7 @@ ggplot(u.Cu, aes(x = x, y = y)) +
 
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-147-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-147-1.png" width="504" /&gt;
 ]
 ---
 ## Ejemplo: Concentración de Cu en mineral por AAS con digestión ácida
@@ -2753,7 +2753,7 @@ ggplot(u.Cu, aes(x = x, y = y)) +
 
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-150-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-150-1.png" width="504" /&gt;
 ]
 
 ---
@@ -2863,10 +2863,10 @@ Para una discusión en detalle y su comparación con el Método de Monte Carlo h
 ## Comparación incertidumbres de calibración lineal vs no lineal:
 
 .pull-left[
-![](index_files/figure-html/patch-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/patch-1.png" width="504" /&gt;
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-153-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-153-1.png" width="504" /&gt;
 ]
 
 ---
@@ -2906,7 +2906,7 @@ ggplot(u.Cu.no.lineal, aes(x = x, y = y)) +
 
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-156-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-156-1.png" width="504" /&gt;
 ]
 ---
 ## Test de linealidad de Mandel
@@ -2996,11 +2996,11 @@ Por lo tanto, la concentración de la muestra problema es
 ---
 ### Esta incertidumbre sólo considera la incertidumbre del instrumento, no incorpora la incertidumbre de los calibrantes. Se debe utilizar el método de _**Regresión con error en ambos ejes**_
 .pull-left[
-![](index_files/figure-html/unnamed-chunk-160-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-160-1.png" width="504" /&gt;
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-161-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-161-1.png" width="504" /&gt;
 ]
 ---
 class: center middle inverse
@@ -3059,7 +3059,7 @@ F-statistic: 316.9 on 1 and 6 DF,  p-value: 2.02e-06
 plot(fit.Cu.lineal, which = 3)
 ```
 
-![](index_files/figure-html/unnamed-chunk-163-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-163-1.png" width="504" /&gt;
 ]
 .pull-right[
 
@@ -3067,7 +3067,7 @@ plot(fit.Cu.lineal, which = 3)
 plot(fit.Cu.lineal, which = 4)
 ```
 
-![](index_files/figure-html/unnamed-chunk-164-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-164-1.png" width="504" /&gt;
 ]
 
 ---

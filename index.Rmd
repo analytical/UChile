@@ -26,7 +26,7 @@ class: bg-main1
 options(htmltools.dir.version = FALSE)
 options(knitr.table.output = 'html')
 library(knitr)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, comment = '')
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, comment = '', fig.retina = 2)
 # options(knitr.table.format = "html")
 
 ```
