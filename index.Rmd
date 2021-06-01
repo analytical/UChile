@@ -164,6 +164,85 @@ class: center middle inverse
 <br>
 <img src="https://d33wubrfki0l68.cloudfront.net/1ac3f0e3753f18c7e2a8893957d1841fba1e3d08/48a33/wp-content/uploads/2018/10/rstudio-logo-flat.png" width="600" height="200">
 
+
+
+---
+## R es una calculadora
+
+```{r, echo = T}
+2 + 2
+```
+
+---
+### R nos permite asignar un valor a una variable y almacenarla
+
+Por ejemplo: asignemos a la variable x el valor 5
+
+```{r, echo = T}
+x <- 5
+x
+
+2*x
+```
+ El símbolo `<-` corresponde al operador asignación
+ 
+---
+## Operador concatenación `c()`:
+
+```{r}
+concentracion <- c(0, 10, 20, 30, 40, 50)
+concentracion
+
+metodo <- c('icpms', 'faas', 'hplc', 'gc')
+metodo
+```
+
+---
+## Operador de repetición y autollenado
+
+```{r}
+concentracion <- seq(0, 50, by = 10)
+
+# Repetir la secuencia (icpms, faas) 5 veces
+metodo <- rep(c('icpms', 'faas'), 5)
+metodo
+
+# Repetir cada método 5 veces cada uno. Primero icpms, luego faas
+metodo <- rep(c('icpms', 'faas'), each = 5)
+metodo
+
+```
+
+
+---
+## El `data.frame` es la estructura 2D regular básica de datos (similar a hoja Excel):
+
+```{r}
+# Crearemos un data frame de 2 columnas: Método Analítico y Concentración
+# Primero creamos la variable Metodo (sin acento)
+
+metodo <- rep(c('ICPMS', 'FAAS'), each = 10)
+concentracion <- rep(c(10, 20), each = 10)
+
+# Creamos el data.frame en base a las variables metodo y concentracion y los
+# guardamos con el nombre datos:
+
+datos <- data.frame(metodo, concentracion)
+datos
+```
+
+---
+## Seleccionar con el signo $ una única variable desde un `data.frame`:
+
+```{r}
+# Seleccionemos sólo la concentración del data.frame datos
+datos$concentracion
+```
+
+
+
+
+
 ---
 class: center middle inverse
 
@@ -1291,88 +1370,29 @@ wilcox.test(Concentracion ~ Metodo, exact = T, data = metodos.no.normales)
 
 
 ---
-## R es una calculadora
-
-```{r, echo = T}
-2 + 2
-```
-
----
-### R nos permite asignar un valor a una variable y almacenarla
-
-Por ejemplo: asignemos a la variable x el valor 5
-
-```{r, echo = T}
-x <- 5
-x
-
-2*x
-```
- El símbolo `<-` corresponde al operador asignación
- 
----
-## Operador concatenación `c()`:
-
-```{r}
-concentracion <- c(0, 10, 20, 30, 40, 50)
-concentracion
-
-metodo <- c('icpms', 'faas', 'hplc', 'gc')
-metodo
-```
-
----
-## Operador de repetición y autollenado
-
-```{r}
-concentracion <- seq(0, 50, by = 10)
-
-# Repetir la secuencia (icpms, faas) 5 veces
-metodo <- rep(c('icpms', 'faas'), 5)
-metodo
-
-# Repetir cada método 5 veces cada uno. Primero icpms, luego faas
-metodo <- rep(c('icpms', 'faas'), each = 5)
-metodo
-
-```
-
-
----
-## El `data.frame` es la estructura 2D regular básica de datos (similar a hoja Excel):
-
-```{r}
-# Crearemos un data frame de 2 columnas: Método Analítico y Concentración
-# Primero creamos la variable Metodo (sin acento)
-
-metodo <- rep(c('ICPMS', 'FAAS'), each = 10)
-concentracion <- rep(c(10, 20), each = 10)
-
-# Creamos el data.frame en base a las variables metodo y concentracion y los
-# guardamos con el nombre datos:
-
-datos <- data.frame(metodo, concentracion)
-datos
-```
-
----
-## Seleccionar con el signo $ una única variable desde un `data.frame`:
-
-```{r}
-# Seleccionemos sólo la concentración del data.frame datos
-datos$concentracion
-```
-
-
-
-
-
----
 class: center middle inverse
 
 # Análisis de varianza
 ### Precisión de repetibilidad y "reproducibilidad" (ISO 5725)
 
+---
+## Modelo ANOVA:
+
+$$y_{ij} = \mu + \alpha_{i} + \epsilon_{ij}$$
+
+donde:
+
+- $y$ es la respuesta a estudiar
+- $\mu$ es la gran media
+- $\alpha_{i}$ es el efecto del tratamiento $i$
+- $\epsilon$ es un error aleatorio con media 0 y varianza constante
+
+$$\begin{array}{ll}
+H_0: & \mu_1 = \mu_2 = \ldots = \mu_I\\
+H_a: & \mbox{Existen dos grupos al menos con medias distintas}
+\end{array}$$
+
+> permite comparar 3 ó mas medias
 
 ---
 ### Tetraciclinas en salmón por HPLC-MS/MS

@@ -155,6 +155,154 @@ class: center middle inverse
 &lt;br&gt;
 &lt;img src="https://d33wubrfki0l68.cloudfront.net/1ac3f0e3753f18c7e2a8893957d1841fba1e3d08/48a33/wp-content/uploads/2018/10/rstudio-logo-flat.png" width="600" height="200"&gt;
 
+
+
+---
+## R es una calculadora
+
+
+```r
+2 + 2
+```
+
+```
+[1] 4
+```
+
+---
+### R nos permite asignar un valor a una variable y almacenarla
+
+Por ejemplo: asignemos a la variable x el valor 5
+
+
+```r
+x &lt;- 5
+x
+```
+
+```
+[1] 5
+```
+
+```r
+2*x
+```
+
+```
+[1] 10
+```
+ El símbolo `&lt;-` corresponde al operador asignación
+ 
+---
+## Operador concatenación `c()`:
+
+
+```r
+concentracion &lt;- c(0, 10, 20, 30, 40, 50)
+concentracion
+```
+
+```
+[1]  0 10 20 30 40 50
+```
+
+```r
+metodo &lt;- c('icpms', 'faas', 'hplc', 'gc')
+metodo
+```
+
+```
+[1] "icpms" "faas"  "hplc"  "gc"   
+```
+
+---
+## Operador de repetición y autollenado
+
+
+```r
+concentracion &lt;- seq(0, 50, by = 10)
+
+# Repetir la secuencia (icpms, faas) 5 veces
+metodo &lt;- rep(c('icpms', 'faas'), 5)
+metodo
+```
+
+```
+ [1] "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms"
+[10] "faas" 
+```
+
+```r
+# Repetir cada método 5 veces cada uno. Primero icpms, luego faas
+metodo &lt;- rep(c('icpms', 'faas'), each = 5)
+metodo
+```
+
+```
+ [1] "icpms" "icpms" "icpms" "icpms" "icpms" "faas"  "faas"  "faas"  "faas" 
+[10] "faas" 
+```
+
+
+---
+## El `data.frame` es la estructura 2D regular básica de datos (similar a hoja Excel):
+
+
+```r
+# Crearemos un data frame de 2 columnas: Método Analítico y Concentración
+# Primero creamos la variable Metodo (sin acento)
+
+metodo &lt;- rep(c('ICPMS', 'FAAS'), each = 10)
+concentracion &lt;- rep(c(10, 20), each = 10)
+
+# Creamos el data.frame en base a las variables metodo y concentracion y los
+# guardamos con el nombre datos:
+
+datos &lt;- data.frame(metodo, concentracion)
+datos
+```
+
+```
+   metodo concentracion
+1   ICPMS            10
+2   ICPMS            10
+3   ICPMS            10
+4   ICPMS            10
+5   ICPMS            10
+6   ICPMS            10
+7   ICPMS            10
+8   ICPMS            10
+9   ICPMS            10
+10  ICPMS            10
+11   FAAS            20
+12   FAAS            20
+13   FAAS            20
+14   FAAS            20
+15   FAAS            20
+16   FAAS            20
+17   FAAS            20
+18   FAAS            20
+19   FAAS            20
+20   FAAS            20
+```
+
+---
+## Seleccionar con el signo $ una única variable desde un `data.frame`:
+
+
+```r
+# Seleccionemos sólo la concentración del data.frame datos
+datos$concentracion
+```
+
+```
+ [1] 10 10 10 10 10 10 10 10 10 10 20 20 20 20 20 20 20 20 20 20
+```
+
+
+
+
+
 ---
 class: center middle inverse
 
@@ -180,7 +328,7 @@ x &lt;- rnorm(100, 120, 10)
 hist(x)
 ```
 
-![](index_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -192,7 +340,7 @@ mean(x)
 ```
 
 ```
-[1] 121.1904
+[1] 120.3795
 ```
 
 ```r
@@ -200,7 +348,7 @@ sd(x)
 ```
 
 ```
-[1] 9.561065
+[1] 10.57476
 ```
 
 
@@ -292,7 +440,7 @@ ggplot(eda, aes(x = Analista, y = Concentracion)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -310,7 +458,7 @@ ggplot(eda, aes(x = Analista, y = Concentracion, fill = Analista)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -326,7 +474,7 @@ ggplot(eda, aes(x = Concentracion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -343,7 +491,7 @@ ggplot(eda, aes(x = Concentracion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -364,7 +512,7 @@ ggplot(eda, aes(x = Concentracion, fill = Analista)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -381,7 +529,7 @@ ggplot(eda, aes(x = Concentracion, fill = Analista)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
 ]
 ---
 ## Density plot ¿Cómo podría diferenciar a los analistas?
@@ -397,7 +545,7 @@ ggplot(eda, aes(x = Concentracion, fill = Analista, col = Analista)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -414,7 +562,7 @@ ggplot(eda, aes(sample = Concentracion)) +
 ]
 
 .pull-rigth[
-![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -453,7 +601,7 @@ ggplot(peso, aes(y = Peso_baja_resolucion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -470,7 +618,7 @@ ggplot(peso, aes(sample = Peso_baja_resolucion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -487,7 +635,7 @@ ggplot(peso, aes(sample = Peso_alta_resolucion)) +
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -502,7 +650,7 @@ dotPlot(~ Peso_baja_resolucion, data = peso)
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -562,7 +710,7 @@ shapiro.test(x.normal)
 	Shapiro-Wilk normality test
 
 data:  x.normal
-W = 0.97347, p-value = 0.8259
+W = 0.97979, p-value = 0.9313
 ```
 
 
@@ -577,7 +725,7 @@ ggplot(datos.normales, aes(sample = x.normal)) +
 
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -602,7 +750,7 @@ ic
 ```
 
 ```
-[1]  96.48874 105.18649
+[1]  91.05105 100.35548
 ```
 
 ---
@@ -621,13 +769,13 @@ t.test(x.normal)
 	One Sample t-test
 
 data:  x.normal
-t = 48.531, df = 19, p-value &lt; 2.2e-16
+t = 43.057, df = 19, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
-  96.48874 105.18649
+  91.05105 100.35548
 sample estimates:
 mean of x 
- 100.8376 
+ 95.70326 
 ```
 
 ---
@@ -644,7 +792,7 @@ ci(x.normal)
 
 ```
   Estimate   CI lower   CI upper Std. Error 
-100.837612  96.488737 105.186487   2.077795 
+ 95.703263  91.051045 100.355480   2.222725 
 ```
 
 
@@ -671,7 +819,7 @@ set.seed(12364)
 CIsim(n = 10, samples = 100, plot= 'draw', conf.level = 0.95)    
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-42-1.png" width="50%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-48-1.png" width="50%" /&gt;
 
 
 
@@ -753,11 +901,11 @@ Cu
 ### Comparar la concentración de %Cu en una aleación cuya especificación es de `\(\mu = 92\%\)`
 
 .pull-left[
-![](index_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-51-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -1164,7 +1312,7 @@ Todos los valores fuera del siguiente intervalo son considerados como outliers:
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-64-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-70-1.png)&lt;!-- --&gt;
 ]
 ---
 ## Test de Dixon con el package `outliers`:
@@ -1328,7 +1476,7 @@ ggplot(datos.no.normales, aes(y = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-73-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-79-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1346,7 +1494,7 @@ ggplot(datos.no.normales, aes(x = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-75-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-81-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1362,7 +1510,7 @@ ggplot(datos.no.normales, aes(sample = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-77-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-83-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1377,7 +1525,7 @@ ggplot(datos.no.normales, aes(x = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-79-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-85-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1444,7 +1592,7 @@ t1* 123.8698 0.3576634    18.25977
 plot(As.boot)
 ```
 
-![](index_files/figure-html/unnamed-chunk-83-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-89-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1560,10 +1708,10 @@ metodos.no.normales
 ## Comparación ICPMS vs AAS datos no normales
 
 .pull-left[
-![](index_files/figure-html/unnamed-chunk-89-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-95-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-90-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-96-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1628,157 +1776,29 @@ alternative hypothesis: true location shift is not equal to 0
 
 
 ---
-## R es una calculadora
-
-
-```r
-2 + 2
-```
-
-```
-[1] 4
-```
-
----
-### R nos permite asignar un valor a una variable y almacenarla
-
-Por ejemplo: asignemos a la variable x el valor 5
-
-
-```r
-x &lt;- 5
-x
-```
-
-```
-[1] 5
-```
-
-```r
-2*x
-```
-
-```
-[1] 10
-```
- El símbolo `&lt;-` corresponde al operador asignación
- 
----
-## Operador concatenación `c()`:
-
-
-```r
-concentracion &lt;- c(0, 10, 20, 30, 40, 50)
-concentracion
-```
-
-```
-[1]  0 10 20 30 40 50
-```
-
-```r
-metodo &lt;- c('icpms', 'faas', 'hplc', 'gc')
-metodo
-```
-
-```
-[1] "icpms" "faas"  "hplc"  "gc"   
-```
-
----
-## Operador de repetición y autollenado
-
-
-```r
-concentracion &lt;- seq(0, 50, by = 10)
-
-# Repetir la secuencia (icpms, faas) 5 veces
-metodo &lt;- rep(c('icpms', 'faas'), 5)
-metodo
-```
-
-```
- [1] "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms"
-[10] "faas" 
-```
-
-```r
-# Repetir cada método 5 veces cada uno. Primero icpms, luego faas
-metodo &lt;- rep(c('icpms', 'faas'), each = 5)
-metodo
-```
-
-```
- [1] "icpms" "icpms" "icpms" "icpms" "icpms" "faas"  "faas"  "faas"  "faas" 
-[10] "faas" 
-```
-
-
----
-## El `data.frame` es la estructura 2D regular básica de datos (similar a hoja Excel):
-
-
-```r
-# Crearemos un data frame de 2 columnas: Método Analítico y Concentración
-# Primero creamos la variable Metodo (sin acento)
-
-metodo &lt;- rep(c('ICPMS', 'FAAS'), each = 10)
-concentracion &lt;- rep(c(10, 20), each = 10)
-
-# Creamos el data.frame en base a las variables metodo y concentracion y los
-# guardamos con el nombre datos:
-
-datos &lt;- data.frame(metodo, concentracion)
-datos
-```
-
-```
-   metodo concentracion
-1   ICPMS            10
-2   ICPMS            10
-3   ICPMS            10
-4   ICPMS            10
-5   ICPMS            10
-6   ICPMS            10
-7   ICPMS            10
-8   ICPMS            10
-9   ICPMS            10
-10  ICPMS            10
-11   FAAS            20
-12   FAAS            20
-13   FAAS            20
-14   FAAS            20
-15   FAAS            20
-16   FAAS            20
-17   FAAS            20
-18   FAAS            20
-19   FAAS            20
-20   FAAS            20
-```
-
----
-## Seleccionar con el signo $ una única variable desde un `data.frame`:
-
-
-```r
-# Seleccionemos sólo la concentración del data.frame datos
-datos$concentracion
-```
-
-```
- [1] 10 10 10 10 10 10 10 10 10 10 20 20 20 20 20 20 20 20 20 20
-```
-
-
-
-
-
----
 class: center middle inverse
 
 # Análisis de varianza
 ### Precisión de repetibilidad y "reproducibilidad" (ISO 5725)
 
+---
+## Modelo ANOVA:
+
+`$$y_{ij} = \mu + \alpha_{i} + \epsilon_{ij}$$`
+
+donde:
+
+- `\(y\)` es la respuesta a estudiar
+- `\(\mu\)` es la gran media
+- `\(\alpha_{i}\)` es el efecto del tratamiento `\(i\)`
+- `\(\epsilon\)` es un error aleatorio con media 0 y varianza constante
+
+`$$\begin{array}{ll}
+H_0: &amp; \mu_1 = \mu_2 = \ldots = \mu_I\\
+H_a: &amp; \mbox{Existen dos grupos al menos con medias distintas}
+\end{array}$$`
+
+&gt; permite comparar 3 ó mas medias
 
 ---
 ### Tetraciclinas en salmón por HPLC-MS/MS
