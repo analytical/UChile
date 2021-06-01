@@ -193,7 +193,7 @@ mean(x)
 ```
 
 ```
-[1] 120.4336
+[1] 120.9588
 ```
 
 ```r
@@ -201,7 +201,7 @@ sd(x)
 ```
 
 ```
-[1] 9.041068
+[1] 10.15428
 ```
 
 
@@ -563,7 +563,7 @@ shapiro.test(x.normal)
 	Shapiro-Wilk normality test
 
 data:  x.normal
-W = 0.95207, p-value = 0.3996
+W = 0.97233, p-value = 0.803
 ```
 
 
@@ -603,7 +603,7 @@ ic
 ```
 
 ```
-[1]  94.2771 101.3894
+[1]  95.08486 102.75344
 ```
 
 ---
@@ -622,13 +622,13 @@ t.test(x.normal)
 	One Sample t-test
 
 data:  x.normal
-t = 57.581, df = 19, p-value &lt; 2.2e-16
+t = 53.997, df = 19, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
-  94.2771 101.3894
+  95.08486 102.75344
 sample estimates:
 mean of x 
- 97.83324 
+ 98.91915 
 ```
 
 ---
@@ -645,7 +645,7 @@ ci(x.normal)
 
 ```
   Estimate   CI lower   CI upper Std. Error 
- 97.833244  94.277100 101.389388   1.699046 
+ 98.919154  95.084863 102.753445   1.831938 
 ```
 
 ---
@@ -714,8 +714,8 @@ Cu
 ```
 
 ```
- [1] 106.44551  96.51504  92.41233  87.77503  71.46753 103.31337  77.39360  99.39948 111.09104
-[10]  77.56107
+ [1] 105.17013  79.37532  79.44561 101.46737  88.68814  81.12826  92.74520
+ [8]  93.86671  92.43804  88.47588
 ```
 
 - `\(H_{0} \,\, \mu = 92\%\)`
@@ -746,7 +746,7 @@ shapiro.test(Cu)
 	Shapiro-Wilk normality test
 
 data:  Cu
-W = 0.94863, p-value = 0.6523
+W = 0.93007, p-value = 0.4486
 ```
 
 ---
@@ -762,13 +762,13 @@ t.test(Cu, mu = 92)
 	One Sample t-test
 
 data:  Cu
-t = 0.079122, df = 9, p-value = 0.9387
+t = -0.61835, df = 9, p-value = 0.5517
 alternative hypothesis: true mean is not equal to 92
 95 percent confidence interval:
-  82.69094 101.98386
+ 83.98786 96.57228
 sample estimates:
 mean of x 
-  92.3374 
+ 90.28007 
 ```
 
 
@@ -1573,7 +1573,8 @@ perm.test(Concentracion ~ Metodo, exact = T, data = metodos.no.normales)
 
 ```
 
-	2-sample Permutation Test (scores mapped into 1:(m+n) using rounded scores)
+	2-sample Permutation Test (scores mapped into 1:(m+n) using rounded
+	scores)
 
 data:  Concentracion by Metodo
 T = 39, p-value = 0.0508
@@ -1693,7 +1694,8 @@ metodo
 ```
 
 ```
- [1] "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms" "faas" 
+ [1] "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms" "faas"  "icpms"
+[10] "faas" 
 ```
 
 ```r
@@ -1703,7 +1705,8 @@ metodo
 ```
 
 ```
- [1] "icpms" "icpms" "icpms" "icpms" "icpms" "faas"  "faas"  "faas"  "faas"  "faas" 
+ [1] "icpms" "icpms" "icpms" "icpms" "icpms" "faas"  "faas"  "faas"  "faas" 
+[10] "faas" 
 ```
 
 
