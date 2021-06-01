@@ -2,7 +2,7 @@
 title: "Herramientas de Diseño Estadístico e <br> Interpretación de las Mediciones"
 subtitle: "Una aproximación con R"
 author: "<br><a href='https://www.analytical.cl'>Carlos Gómez<br></a><a href='mailto:cvgomez@gmail.com'>cvgomez@gmail.com</a>"
-date: "<br>Facultad de Ciencias Químicas y Farmacéuticas"
+date: "<br>Facultad de Ciencias Químicas y Farmacéuticas<br>Universidad de Chile"
 output:
   xaringan::moon_reader:
     includes:
@@ -95,6 +95,42 @@ class: inverse middle
 - `metRology`, `chemCal`, etc.
 - es el idioma *de facto* de la estadística y data science
 - ¡es gratis! (*open source*)
+
+
+---
+class: center middle inverse
+
+# ¿Qué es la investigación reproducible?
+
+---
+## Análisis estadístico "no reproducible (*aka* a mano)":
+
+![Plot title. ](index_insertimage_24.png)
+
+<br>
+https://campus.sagepub.com/blog/why-teach-using-rmarkdown
+
+---
+## Investigación reproducible con RStudio y `rmarkdown` :
+
+
+```{r, echo = F, out.width='30%'}
+include_graphics('index_insertimage_23.png')
+```
+
+
+<br>
+.footer[
+- https://hbctraining.github.io/reproducibility-tools/lessons/01-Rmarkdown_basics.html
+- https://book.fosteropenscience.eu/en/
+]
+
+
+
+
+---
+class: center
+<img src="https://i1.wp.com/blog.rstudio.com/2019/11/18/artist-in-residence/rmarkdown_wizards.png?zoom=2&w=450&ssl=1">
 
 
 ---
@@ -1325,33 +1361,6 @@ datos$concentracion
 
 
 
----
-class: center middle inverse
-
-# ¿Qué es la investigación reproducible?
-
----
-## Investigación reproducible
-Have you ever reproduced someone else’s research analysis?
-
-How about reproducing your own old work? What tools did you use?
-
-Do you know how to reproduce your collaborator’s work? Was it hard or easy?
-
-How would you go about extending the analysis further?
-
-If you notice a data error how easy would it be to re-create the analysis?
-
-What if your collaborator is no longer available?
-
-
----
-## Análisis estadístico a la "*antigua*" (Era pre-R)
-
-
----
-class: center
-<img src="https://i1.wp.com/blog.rstudio.com/2019/11/18/artist-in-residence/rmarkdown_wizards.png?zoom=2&w=450&ssl=1">
 
 
 ---
