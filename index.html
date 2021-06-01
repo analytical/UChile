@@ -24,7 +24,6 @@ class: bg-main1
 
 
 
----
 ## El instructor de este curso
 
 .pull-left[
@@ -193,7 +192,7 @@ mean(x)
 ```
 
 ```
-[1] 120.9588
+[1] 121.1904
 ```
 
 ```r
@@ -201,7 +200,7 @@ sd(x)
 ```
 
 ```
-[1] 10.15428
+[1] 9.561065
 ```
 
 
@@ -563,7 +562,7 @@ shapiro.test(x.normal)
 	Shapiro-Wilk normality test
 
 data:  x.normal
-W = 0.97233, p-value = 0.803
+W = 0.97347, p-value = 0.8259
 ```
 
 
@@ -603,7 +602,7 @@ ic
 ```
 
 ```
-[1]  95.08486 102.75344
+[1]  96.48874 105.18649
 ```
 
 ---
@@ -622,13 +621,13 @@ t.test(x.normal)
 	One Sample t-test
 
 data:  x.normal
-t = 53.997, df = 19, p-value &lt; 2.2e-16
+t = 48.531, df = 19, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
-  95.08486 102.75344
+  96.48874 105.18649
 sample estimates:
 mean of x 
- 98.91915 
+ 100.8376 
 ```
 
 ---
@@ -645,8 +644,37 @@ ci(x.normal)
 
 ```
   Estimate   CI lower   CI upper Std. Error 
- 98.919154  95.084863 102.753445   1.831938 
+100.837612  96.488737 105.186487   2.077795 
 ```
+
+
+---
+class: center middle inverse
+
+# ¿Cómo se interpreta un intervalo de confianza? 
+## (suponga 1 - `\(\alpha\)` = 95%)
+
+---
+## https://rpsychologist.com/d3/ci/
+
+.center[
+![Plot title. ](index_insertimage_6.png)
+]
+
+---
+## En un gráfico estático:
+
+
+```r
+library(mosaic)
+set.seed(12364)
+CIsim(n = 10, samples = 100, plot= 'draw', conf.level = 0.95)    
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-42-1.png" width="50%" /&gt;
+
+
+
 
 ---
 class: center middle inverse
@@ -714,8 +742,8 @@ Cu
 ```
 
 ```
- [1] 105.17013  79.37532  79.44561 101.46737  88.68814  81.12826  92.74520
- [8]  93.86671  92.43804  88.47588
+ [1]  84.50574  90.95708  98.59009  88.28702  90.83852 110.41289  89.07675
+ [8]  89.83351  88.77142 105.21907
 ```
 
 - `\(H_{0} \,\, \mu = 92\%\)`
@@ -725,11 +753,11 @@ Cu
 ### Comparar la concentración de %Cu en una aleación cuya especificación es de `\(\mu = 92\%\)`
 
 .pull-left[
-![](index_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -746,7 +774,7 @@ shapiro.test(Cu)
 	Shapiro-Wilk normality test
 
 data:  Cu
-W = 0.93007, p-value = 0.4486
+W = 0.83101, p-value = 0.03441
 ```
 
 ---
@@ -762,13 +790,13 @@ t.test(Cu, mu = 92)
 	One Sample t-test
 
 data:  Cu
-t = -0.61835, df = 9, p-value = 0.5517
+t = 0.6253, df = 9, p-value = 0.5473
 alternative hypothesis: true mean is not equal to 92
 95 percent confidence interval:
- 83.98786 96.57228
+ 87.68285 99.61556
 sample estimates:
 mean of x 
- 90.28007 
+ 93.64921 
 ```
 
 
@@ -1136,7 +1164,7 @@ Todos los valores fuera del siguiente intervalo son considerados como outliers:
 ]
 
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-63-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-64-1.png)&lt;!-- --&gt;
 ]
 ---
 ## Test de Dixon con el package `outliers`:
@@ -1300,7 +1328,7 @@ ggplot(datos.no.normales, aes(y = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-72-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-73-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1318,7 +1346,7 @@ ggplot(datos.no.normales, aes(x = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-74-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-75-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1334,7 +1362,7 @@ ggplot(datos.no.normales, aes(sample = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-76-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-77-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1349,7 +1377,7 @@ ggplot(datos.no.normales, aes(x = As)) +
 ```
 ]
 .pull-right[
-![](index_files/figure-html/unnamed-chunk-78-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-79-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1416,7 +1444,7 @@ t1* 123.8698 0.3576634    18.25977
 plot(As.boot)
 ```
 
-![](index_files/figure-html/unnamed-chunk-82-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-83-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -1482,30 +1510,6 @@ class: center middle inverse
 
 
 
----
-class: center middle inverse
-
-# ¿Cómo se interpreta un intervalo de confianza? 
-## (suponga 1 - `\(\alpha\)` = 95%)
-
----
-## https://rpsychologist.com/d3/ci/
-
-.center[
-![Plot title. ](index_insertimage_6.png)
-]
-
----
-## En un gráfico estático:
-
-
-```r
-library(mosaic)
-set.seed(12364)
-CIsim(n = 10, samples = 100, plot= 'draw', conf.level = 0.95)    
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-87-1.png" width="50%" /&gt;
 
 
 ---

@@ -31,7 +31,6 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, comment = '')
 
 ```
 
----
 ## El instructor de este curso
 
 .pull-left[
@@ -618,6 +617,32 @@ library(gmodels) # Asumimos que está instalado con install.packages('gmodels')
 ci(x.normal)
 ```
 
+
+---
+class: center middle inverse
+
+# ¿Cómo se interpreta un intervalo de confianza? 
+## (suponga 1 - $\alpha$ = 95%)
+
+---
+## https://rpsychologist.com/d3/ci/
+
+.center[
+![Plot title. ](index_insertimage_6.png)
+]
+
+---
+## En un gráfico estático:
+
+```{r, out.width='50%'}
+library(mosaic)
+set.seed(12364)
+CIsim(n = 10, samples = 100, plot= 'draw', conf.level = 0.95)    
+```
+
+
+
+
 ---
 class: center middle inverse
 
@@ -1195,27 +1220,6 @@ class: center middle inverse
 
 
 
----
-class: center middle inverse
-
-# ¿Cómo se interpreta un intervalo de confianza? 
-## (suponga 1 - $\alpha$ = 95%)
-
----
-## https://rpsychologist.com/d3/ci/
-
-.center[
-![Plot title. ](index_insertimage_6.png)
-]
-
----
-## En un gráfico estático:
-
-```{r, out.width='50%'}
-library(mosaic)
-set.seed(12364)
-CIsim(n = 10, samples = 100, plot= 'draw', conf.level = 0.95)    
-```
 
 
 ---
