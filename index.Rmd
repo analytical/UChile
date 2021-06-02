@@ -330,7 +330,7 @@ class: center middle inverse
 ## Instalamos la librería `ggplot2`:
 
 ```{r, eval = F}
-install.packages(ggplot2) # se instala una única vez en el documento
+install.packages('ggplot2') # se instala una única vez en el documento
 ```
 
 ---

@@ -340,7 +340,7 @@ mean(x)
 ```
 
 ```
-[1] 118.7937
+[1] 120.0864
 ```
 
 ```r
@@ -348,7 +348,7 @@ sd(x)
 ```
 
 ```
-[1] 9.481865
+[1] 9.684019
 ```
 
 
@@ -418,7 +418,7 @@ class: center middle inverse
 
 
 ```r
-install.packages(ggplot2) # se instala una única vez en el documento
+install.packages('ggplot2') # se instala una única vez en el documento
 ```
 
 ---
@@ -710,7 +710,7 @@ shapiro.test(x.normal)
 	Shapiro-Wilk normality test
 
 data:  x.normal
-W = 0.98472, p-value = 0.9798
+W = 0.89499, p-value = 0.03326
 ```
 
 
@@ -750,7 +750,7 @@ ic
 ```
 
 ```
-[1]  97.57888 108.19032
+[1]  95.48006 106.22089
 ```
 
 ---
@@ -769,13 +769,13 @@ t.test(x.normal)
 	One Sample t-test
 
 data:  x.normal
-t = 40.586, df = 19, p-value &lt; 2.2e-16
+t = 39.305, df = 19, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
-  97.57888 108.19032
+  95.48006 106.22089
 sample estimates:
 mean of x 
- 102.8846 
+ 100.8505 
 ```
 
 ---
@@ -792,7 +792,7 @@ ci(x.normal)
 
 ```
   Estimate   CI lower   CI upper Std. Error 
-102.884597  97.578877 108.190318   2.534955 
+100.850477  95.480064 106.220890   2.565863 
 ```
 
 
